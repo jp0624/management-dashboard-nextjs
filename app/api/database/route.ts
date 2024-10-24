@@ -46,6 +46,7 @@ export async function POST(request: Request) {
 			const targets = await readTargets()
 			return NextResponse.json(targets)
 		} catch (error) {
+			console.log('error: ', error)
 			return NextResponse.json(
 				{ error: 'Failed to read targets' },
 				{ status: 500 }
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
 			const history = await readHistory()
 			return NextResponse.json(history)
 		} catch (error) {
+			console.log('error: ', error)
 			return NextResponse.json(
 				{ error: 'Failed to read history' },
 				{ status: 500 }
@@ -96,6 +98,7 @@ export async function POST(request: Request) {
 
 			return NextResponse.json(targets[targetIndex])
 		} catch (error) {
+			console.log('error: ', error)
 			return NextResponse.json(
 				{ error: 'Failed to update target' },
 				{ status: 500 }
@@ -117,6 +120,7 @@ export async function POST(request: Request) {
 
 			return NextResponse.json(newTargetWithId, { status: 201 }) // Return the created target
 		} catch (error) {
+			console.log('error: ', error)
 			return NextResponse.json(
 				{ error: 'Failed to create target' },
 				{ status: 500 }
@@ -154,6 +158,7 @@ export async function POST(request: Request) {
 			// Return a success message without logging the deletion in history
 			return NextResponse.json({ message: 'Target deleted successfully' })
 		} catch (error) {
+			console.log('error: ', error)
 			return NextResponse.json(
 				{ error: 'Failed to delete target' },
 				{ status: 500 }
@@ -198,6 +203,7 @@ export async function PUT(request: Request) {
 
 		return NextResponse.json(targets[targetIndex])
 	} catch (error) {
+		console.log('error: ', error)
 		return NextResponse.json(
 			{ error: 'Failed to update target' },
 			{ status: 500 }

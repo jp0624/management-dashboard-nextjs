@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import { useEffect, useState } from 'react'
-import { DB_API_PATH } from '@/app/constants/paths'
 import { FaTimesCircle } from 'react-icons/fa'
 
 interface StatusChangeHistory {
