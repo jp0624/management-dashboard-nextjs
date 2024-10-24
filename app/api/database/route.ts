@@ -20,7 +20,7 @@ export interface StatusChangeHistory {
 
 const readTargets = async (): Promise<Target[]> => {
 	try {
-		const fileBuffer = await fs.readFile(JSON_PATH)
+		const fileBuffer = await fs.readFile(JSON_PATH, 'utf8')
 		return JSON.parse(fileBuffer.toString()) as Target[]
 	} catch (error) {
 		console.error('Error reading targets:', error)
@@ -29,7 +29,7 @@ const readTargets = async (): Promise<Target[]> => {
 }
 
 const readHistory = async (): Promise<StatusChangeHistory[]> => {
-	const fileBuffer = await fs.readFile(HISTORY_PATH)
+	const fileBuffer = await fs.readFile(HISTORY_PATH, 'utf8')
 	return JSON.parse(fileBuffer.toString()) as StatusChangeHistory[]
 }
 
