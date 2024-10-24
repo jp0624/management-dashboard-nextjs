@@ -51,9 +51,8 @@ const TargetTable: React.FC<TargetTableProps> = ({
 
 	const handleSaveClick = (id: number) => {
 		setSaving(true)
-		savePipelineStatus(id).finally(() => {
-			setSaving(false)
-		})
+		savePipelineStatus(id)
+		setSaving(false)
 	}
 
 	return (
