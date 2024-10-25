@@ -42,12 +42,23 @@ const writeHistory = async (history: StatusChangeHistory[]) => {
 }
 
 // Handle POST requests
+// export async function GET() {
+// 	try {
+// 		const fileBuffer = await fs.readFile(JSON_PATH, 'utf8')
+// 		return JSON.parse(fileBuffer.toString()) as Target[]
+// 	} catch (error) {
+// 		console.error('Error reading targets:', error)
+// 		throw new Error('Failed to read targets')
+// 	}
+// }
 export async function POST(request: Request) {
 	const body = await request.json()
 	const { action } = body
+	console.log('POST body: ', body)
 
 	if (action === 'fetchTargets') {
 		try {
+			console.log('POST boom')
 			const targets = await readTargets()
 			return NextResponse.json(targets)
 		} catch (error) {
