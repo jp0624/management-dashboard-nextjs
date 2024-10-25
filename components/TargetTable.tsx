@@ -57,7 +57,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 
 	return (
 		<div className='flex-1'>
-			<div className='grid grid-cols-1 gap-6'>
+			<div className='grid grid-cols-1 gap-3'>
 				{targets.length === 0 && (
 					<p className='w-full text-center'>No matching targets found.</p>
 				)}

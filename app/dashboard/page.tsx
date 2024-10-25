@@ -17,7 +17,7 @@ interface TargetData {
 	markets: string[]
 }
 
-function DashboardPage() {
+const DashboardPage = () => {
 	const [dataLoading, setDataLoading] = useState<boolean>(true)
 	const [targets, setTargets] = useState<TargetData[]>([])
 	const [error, setError] = useState<string | null>(null)
@@ -31,16 +31,16 @@ function DashboardPage() {
 	)
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 	const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false)
-	const [historyData, setHistoryData] = useState<any[]>([])
 
+	// Fetch targets on component mount
 	useEffect(() => {
-		async function fetchTargets() {
+		const fetchTargets = async () => {
 			try {
-				const response = await fetch(DB_API_PATH, {
-					method: 'POST',
+				const response = await fetch(`${DB_API_PATH}/targets`, {
+					method: 'GET',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ action: 'fetchTargets' }),
 				})
+
 				if (!response.ok) throw new Error('Failed to fetch targets')
 				const data: TargetData[] = await response.json()
 				setTargets(data)
@@ -52,6 +52,7 @@ function DashboardPage() {
 						)
 					)
 				)
+
 				setPipelineStatusOptions(statuses)
 				setActiveStatuses(statuses)
 			} catch (error: any) {
@@ -65,22 +66,7 @@ function DashboardPage() {
 		fetchTargets()
 	}, [])
 
-	const fetchHistory = async () => {
-		try {
-			const response = await fetch(DB_API_PATH, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ action: 'fetchHistory' }),
-			})
-			if (!response.ok) throw new Error('Failed to fetch history')
-			const data = await response.json()
-			setHistoryData(data)
-		} catch (error: any) {
-			console.error('Error fetching history:', error)
-			setError(error.message || 'An unknown error occurred')
-		}
-	}
-
+	// Add a new target
 	const addNewTarget = async (newTarget: {
 		name: string
 		description: string
@@ -88,47 +74,33 @@ function DashboardPage() {
 		markets: string[]
 	}) => {
 		try {
-			const response = await fetch(DB_API_PATH, {
-				method: 'POST', // Ensure you're using POST
+			const response = await fetch(`${DB_API_PATH}/targets`, {
+				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ action: 'createTarget', data: newTarget }),
+				body: JSON.stringify(newTarget),
 			})
 
 			if (!response.ok) throw new Error('Failed to add new target')
 
 			const createdTarget: TargetData = await response.json()
 			setTargets((prev) => [...prev, createdTarget])
-
-			// Update pipelineStatusOptions if needed
-			setPipelineStatusOptions((prevOptions) => {
-				const updatedStatuses = Array.from(
-					new Set([
-						...prevOptions,
-						createdTarget.pipelineStatus === null
-							? 'Not Set'
-							: createdTarget.pipelineStatus,
-					])
-				)
-				return updatedStatuses.filter((status) => status !== 'All')
-			})
 		} catch (error: any) {
 			console.error('Error adding new target:', error)
 			setError(error.message || 'An unknown error occurred')
 		}
 	}
 
+	// Save pipeline status
 	const savePipelineStatus = async (id: number) => {
+		if (newPipelineStatus === null) return
+
 		try {
-			const response = await fetch(DB_API_PATH, {
-				method: 'POST',
+			const response = await fetch(`${DB_API_PATH}/targets/${id}`, {
+				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					action: 'updateTarget',
-					data: {
-						id,
-						pipelineStatus:
-							newPipelineStatus === 'Not Set' ? null : newPipelineStatus,
-					},
+					pipelineStatus:
+						newPipelineStatus === 'Not Set' ? null : newPipelineStatus,
 				}),
 			})
 
@@ -146,17 +118,16 @@ function DashboardPage() {
 		}
 	}
 
+	// Delete target
 	const deleteTarget = async (id: number) => {
 		try {
-			const response = await fetch(DB_API_PATH, {
-				method: 'POST', // Change to POST since your handler checks for 'action'
+			const response = await fetch(`${DB_API_PATH}/targets/${id}`, {
+				method: 'DELETE',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ action: 'deleteTarget', data: { id } }),
 			})
 
 			if (!response.ok) throw new Error('Failed to delete target')
 
-			// Update local state
 			setTargets((prev) => prev.filter((target) => target.id !== id))
 		} catch (error: any) {
 			console.error('Error deleting target:', error)
@@ -164,6 +135,7 @@ function DashboardPage() {
 		}
 	}
 
+	// Handle editing target
 	const handleEditTarget = (target: TargetData) => {
 		setEditingTargetId(target.id)
 		setNewPipelineStatus(
@@ -171,6 +143,7 @@ function DashboardPage() {
 		)
 	}
 
+	// Filter targets based on active statuses
 	const filteredTargets = targets.filter((target) => {
 		if (activeStatuses.includes('All')) return true
 		return activeStatuses.includes(
@@ -206,7 +179,6 @@ function DashboardPage() {
 	}
 
 	const handleViewHistory = () => {
-		fetchHistory()
 		setIsHistoryModalOpen(true)
 	}
 
@@ -245,14 +217,15 @@ function DashboardPage() {
 						<div className='overflow-y-auto lg:pr-2 mb-2 scrollbar-targets w-full shadow-btm-mid'>
 							<TargetTable
 								targets={filteredTargets}
+								// setTargets={setTargets}
 								editingTargetId={editingTargetId}
-								newPipelineStatus={newPipelineStatus}
 								setEditingTargetId={setEditingTargetId}
+								newPipelineStatus={newPipelineStatus}
 								setNewPipelineStatus={setNewPipelineStatus}
-								savePipelineStatus={savePipelineStatus}
-								deleteTarget={deleteTarget}
 								pipelineStatusOptions={pipelineStatusOptions}
 								handleEditTarget={handleEditTarget}
+								deleteTarget={deleteTarget}
+								savePipelineStatus={savePipelineStatus}
 							/>
 						</div>
 						<div className='flex space-x-2 pb-5 lg:pb-0'>
@@ -278,7 +251,7 @@ function DashboardPage() {
 						<HistoryModal
 							isOpen={isHistoryModalOpen}
 							onClose={() => setIsHistoryModalOpen(false)}
-							historyData={historyData}
+							// historyData={historyData}
 							targets={targets}
 						/>
 					</div>
