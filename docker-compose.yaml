@@ -1,0 +1,8 @@
+version: '1'
+services:
+  web:
+    image: target-management-dashboard
+    ports:
+      - '3000:3000'
+    build: .
+    restart: always

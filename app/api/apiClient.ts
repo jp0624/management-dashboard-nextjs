@@ -1,7 +1,7 @@
-import { DB_API_PATH } from '@/app/constants/paths'
+import { API_PATH } from '@/app/constants/paths'
 
 export const apiFetch = async (url: string, options: RequestInit = {}) => {
-	const response = await fetch(`${DB_API_PATH}${url}`, {
+	const response = await fetch(`${API_PATH}${url}`, {
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

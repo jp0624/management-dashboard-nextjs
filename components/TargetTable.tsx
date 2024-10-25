@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa'
+import useModal from '@/app/hooks/useModal'
 
 interface TargetData {
 	id: number
@@ -19,6 +20,7 @@ interface TargetTableProps {
 	deleteTarget: (id: number) => void
 	pipelineStatusOptions: string[]
 	handleEditTarget: (target: TargetData) => void
+	handleAddTarget: () => void // Add this prop for adding new target
 }
 
 const TargetTable: React.FC<TargetTableProps> = ({
@@ -32,32 +34,19 @@ const TargetTable: React.FC<TargetTableProps> = ({
 	pipelineStatusOptions,
 	handleEditTarget,
 }) => {
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const [targetToDelete, setTargetToDelete] = useState<number | null>(null)
-	const [saving, setSaving] = useState(false)
+	const { isModalOpen, closeModal, handleConfirm, modalOptions } = useModal()
 
 	const handleDeleteClick = (id: number) => {
-		setTargetToDelete(id)
-		setIsModalOpen(true)
-	}
-
-	const confirmDelete = () => {
-		if (targetToDelete !== null) {
-			deleteTarget(targetToDelete)
-			setTargetToDelete(null)
-			setIsModalOpen(false)
-		}
+		deleteTarget(id)
 	}
 
 	const handleSaveClick = (id: number) => {
-		setSaving(true)
 		savePipelineStatus(id)
-		setSaving(false)
 	}
 
 	return (
 		<div className='flex-1'>
-			<div className='grid grid-cols-1 gap-3'>
+			<div className='grid grid-cols-1 gap-5'>
 				{targets.length === 0 && (
 					<p className='w-full text-center'>No matching targets found.</p>
 				)}
@@ -68,7 +57,6 @@ const TargetTable: React.FC<TargetTableProps> = ({
 					>
 						<div className='flex flex-row justify-between items-center'>
 							<h3 className='text-lg font-bold'>{target.name}</h3>
-
 							<button
 								onClick={() => handleDeleteClick(target.id)}
 								className='bg-red-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
@@ -77,15 +65,14 @@ const TargetTable: React.FC<TargetTableProps> = ({
 							</button>
 						</div>
 						<p className='text-gray-500'>{target.description}</p>
-						<div className='mt-2'>
-							<strong>Pipeline Status:</strong>{' '}
+						<div className='mt-1'>
+							<strong className='inline-block py-1'>Pipeline Status:</strong>{' '}
 							{editingTargetId === target.id ? (
 								<select
 									value={newPipelineStatus || ''}
 									onChange={(e) => setNewPipelineStatus(e.target.value || null)}
 									className='border border-gray-300 px-2 py-1 rounded text-slate-900'
 								>
-									{/* Only add "Not Set" if it is not already included in pipelineStatusOptions */}
 									{!pipelineStatusOptions.includes('Not Set') && (
 										<option value=''>Not Set</option>
 									)}
@@ -101,7 +88,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 								target.pipelineStatus
 							)}
 						</div>
-						<div className='mt-2'>
+						<div className='mt-1'>
 							<strong>Markets:</strong> {target.markets.join(', ')}
 						</div>
 						<div className='mt-4 flex space-x-2'>
@@ -116,9 +103,8 @@ const TargetTable: React.FC<TargetTableProps> = ({
 									<button
 										onClick={() => handleSaveClick(target.id)}
 										className='bg-green-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
-										disabled={saving}
 									>
-										<FaSave /> {saving ? 'Saving...' : 'Save'}
+										<FaSave /> Save
 									</button>
 								</>
 							) : (
@@ -126,8 +112,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 									onClick={() => handleEditTarget(target)}
 									className='bg-blue-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
 								>
-									<FaEdit />
-									Edit
+									<FaEdit /> Edit
 								</button>
 							)}
 						</div>
@@ -135,21 +120,21 @@ const TargetTable: React.FC<TargetTableProps> = ({
 				))}
 			</div>
 
-			{/* Confirmation Modal */}
-			{isModalOpen && (
+			{/* Modal for Confirmation */}
+			{isModalOpen && modalOptions && (
 				<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10'>
 					<div className='bg-white p-6 rounded shadow-md text-slate-800'>
-						<h2 className='text-lg font-bold'>Confirm Delete</h2>
-						<p>Are you sure you want to delete this target?</p>
+						<h2 className='text-lg font-bold'>{modalOptions.title}</h2>
+						<p>{modalOptions.message}</p>
 						<div className='mt-4 flex justify-end'>
 							<button
-								onClick={() => setIsModalOpen(false)}
+								onClick={closeModal}
 								className='bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2'
 							>
 								Cancel
 							</button>
 							<button
-								onClick={confirmDelete}
+								onClick={handleConfirm} // Calls the handleConfirm which in turn calls onConfirm
 								className='bg-red-500 text-white px-4 py-2 rounded'
 							>
 								Delete

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 import { readFile, writeHistory } from '@/app/lib/db'
-import { HISTORY_PATH } from '@/app/constants/paths'
+import { HISTORY_JSON_PATH } from '@/app/constants/paths'
 import { StatusChangeHistory } from '@/app/types'
 
 export async function GET() {
 	try {
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		return NextResponse.json(history)
 	} catch (error) {
 		console.error('Error reading history:', error)
@@ -21,9 +21,9 @@ export async function POST(request: Request) {
 
 	try {
 		const newEntry = body as StatusChangeHistory
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(newEntry)
-		await writeHistory(history, HISTORY_PATH)
+		await writeHistory(history, HISTORY_JSON_PATH)
 		return NextResponse.json(newEntry, { status: 201 })
 	} catch (error) {
 		console.error('Error writing history:', error)

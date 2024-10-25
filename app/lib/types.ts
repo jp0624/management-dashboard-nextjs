@@ -12,4 +12,5 @@ export interface StatusChangeHistory {
 	oldStatus: string | null
 	newStatus: string | null
 	changedAt: string // ISO format date string
+	action: 'add' | 'delete'
 }

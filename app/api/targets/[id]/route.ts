@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server'
 import { readFile, writeTargets, writeHistory } from '@/app/lib/db'
-import { JSON_PATH, HISTORY_PATH } from '@/app/constants/paths'
+import { TARGETS_JSON_PATH, HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(
 	request: Request,
@@ -9,7 +9,7 @@ export async function GET(
 ) {
 	const { id } = params
 	try {
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		const target = targets.find(
 			(t: { id: number }) => t.id === parseInt(id, 10)
 		)
@@ -37,7 +37,7 @@ export async function PATCH(
 
 	try {
 		const { pipelineStatus } = body
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		const targetIndex = targets.findIndex(
 			(target: { id: number }) => target.id === parseInt(id, 10)
 		)
@@ -59,13 +59,14 @@ export async function PATCH(
 			oldStatus,
 			newStatus: pipelineStatus,
 			changedAt: new Date().toISOString(),
+			action: 'status',
 		}
 
 		// Update history
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(historyEntry)
-		await writeHistory(history, HISTORY_PATH) // Save the updated history
-		await writeTargets(targets, JSON_PATH) // Save the updated targets
+		await writeHistory(history, HISTORY_JSON_PATH) // Save the updated history
+		await writeTargets(targets, TARGETS_JSON_PATH) // Save the updated targets
 
 		return NextResponse.json(targets[targetIndex])
 	} catch (error) {
@@ -86,7 +87,7 @@ export async function PUT(
 
 	try {
 		const pipelineStatus = body.pipelineStatus // Adjust to how the client sends data
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		const targetIndex = targets.findIndex(
 			(target: { id: number }) => target.id === parseInt(id, 10)
 		)
@@ -104,12 +105,13 @@ export async function PUT(
 			oldStatus,
 			newStatus: pipelineStatus,
 			changedAt: new Date().toISOString(),
+			action: 'status',
 		}
 
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(historyEntry)
-		await writeHistory(history, HISTORY_PATH)
-		await writeTargets(targets, JSON_PATH)
+		await writeHistory(history, HISTORY_JSON_PATH)
+		await writeTargets(targets, TARGETS_JSON_PATH)
 
 		return NextResponse.json(targets[targetIndex])
 	} catch (error) {
@@ -128,7 +130,7 @@ export async function DELETE(
 	const { id } = params
 
 	try {
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		const targetIndex = targets.findIndex(
 			(target: { id: number }) => target.id === parseInt(id, 10)
 		)
@@ -137,15 +139,26 @@ export async function DELETE(
 			return NextResponse.json({ error: 'Target not found' }, { status: 404 })
 		}
 
+		// Create a history entry
 		const deletedTarget = targets[targetIndex]
-		targets.splice(targetIndex, 1)
-		await writeTargets(targets, JSON_PATH)
+		const historyEntry = {
+			id: Date.now(),
+			name: deletedTarget.name,
+			action: 'delete',
+			changedAt: new Date().toISOString(),
+		}
 
-		const history = await readFile(HISTORY_PATH)
-		const updatedHistory = history.filter(
-			(entry: { targetId: any }) => entry.targetId !== deletedTarget.id
-		)
-		await writeHistory(updatedHistory, HISTORY_PATH)
+		// Delete the target
+		targets.splice(targetIndex, 1)
+
+		const history = await readFile(HISTORY_JSON_PATH)
+		history.push(historyEntry)
+
+		// const updatedHistory = history.filter(
+		// 	(entry: { targetId: any }) => entry.targetId !== deletedTarget.id
+		// )
+		await writeTargets(targets, TARGETS_JSON_PATH)
+		await writeHistory(history, HISTORY_JSON_PATH)
 
 		return NextResponse.json({ message: 'Target deleted successfully' })
 	} catch (error) {

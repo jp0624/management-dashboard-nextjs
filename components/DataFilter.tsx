@@ -13,9 +13,9 @@ const DataFilter: React.FC<DataFilterProps> = ({
 }) => (
 	<div className='flex flex-row flex-wrap px-5 gap-1 lg:gap-2 items-center justify-center pt-2 whitespace-nowrap text-sm lg:text-base'>
 		{pipelineStatusOptions.length > 0 &&
-			['All', ...pipelineStatusOptions.sort()].map((status) => (
+			['All', ...pipelineStatusOptions.sort()].map((status, index) => (
 				<button
-					key={status}
+					key={`${status}${index}`}
 					className={`py-1 px-3 rounded ${
 						activeStatuses.includes(status)
 							? 'bg-blue-500 text-white'

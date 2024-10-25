@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { readFile, writeTargets } from '@/app/lib/db'
-import { JSON_PATH } from '@/app/constants/paths'
+import { readFile, writeTargets, writeHistory } from '@/app/lib/db'
+import { HISTORY_JSON_PATH, TARGETS_JSON_PATH } from '@/app/constants/paths'
 import { Target } from '@/app/types'
 
 export async function GET() {
 	try {
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		return NextResponse.json(targets)
 	} catch (error) {
 		console.error('Error reading targets:', error)
@@ -25,14 +25,26 @@ export async function POST(request: Request) {
 	}
 
 	try {
-		const targets = await readFile(JSON_PATH)
+		const targets = await readFile(TARGETS_JSON_PATH)
 		const newTarget: Target = {
 			id: Date.now(), // Or any other logic to create a unique ID
 			...body,
 		}
 
 		targets.push(newTarget)
-		await writeTargets(targets, JSON_PATH)
+
+		const history = await readFile(HISTORY_JSON_PATH)
+		// Create a history entry
+		const historyEntry = {
+			id: Date.now(),
+			name: newTarget.name,
+			action: 'add',
+			changedAt: new Date().toISOString(),
+		}
+		history.push(historyEntry)
+
+		await writeHistory(history, HISTORY_JSON_PATH)
+		await writeTargets(targets, TARGETS_JSON_PATH)
 
 		return NextResponse.json(newTarget)
 	} catch (error) {

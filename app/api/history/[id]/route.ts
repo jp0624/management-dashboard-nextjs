@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { readFile, writeHistory } from '@/app/lib/db'
-import { HISTORY_PATH } from '@/app/constants/paths'
+import { HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(
 	request: Request,
@@ -9,7 +9,7 @@ export async function GET(
 	const { id } = params
 
 	try {
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		const entry = history.find((h: { id: number }) => h.id === parseInt(id, 10))
 
 		if (!entry) {
@@ -36,7 +36,7 @@ export async function DELETE(
 	const { id } = params
 
 	try {
-		const history = await readFile(HISTORY_PATH)
+		const history = await readFile(HISTORY_JSON_PATH)
 		const entryIndex = history.findIndex(
 			(entry: { id: number }) => entry.id === parseInt(id, 10)
 		)
@@ -49,7 +49,7 @@ export async function DELETE(
 		}
 
 		history.splice(entryIndex, 1)
-		await writeHistory(history, HISTORY_PATH)
+		await writeHistory(history, HISTORY_JSON_PATH)
 
 		return NextResponse.json({ message: 'History entry deleted successfully' })
 	} catch (error) {

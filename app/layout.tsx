@@ -28,6 +28,9 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				<div className='text-center absolute top-2 right-2 px-2 py-1 z-10 block border border-white-900 rounded text-sm text-white bg-slate-900'>
+					Mode: {process.env.NEXT_PUBLIC_MODE}
+				</div>
 				{children}
 			</body>
 		</html>
