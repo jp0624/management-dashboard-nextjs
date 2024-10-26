@@ -40,7 +40,7 @@ docker-compose down
 - navigate to where you'd like to install the app and clone the repository by running:
 
 ```
-git clone https://github.com/jp0624/docker-next-firebase-auth.git
+git clone https://github.com/jp0624/management-dashboard-nextjs.git
 ```
 
 - next open that directory and build with npm:
