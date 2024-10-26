@@ -186,6 +186,11 @@ npm run dev
 - Data Backups: Regularly back up the database to prevent data loss.
 - Performance Monitoring: Monitor the performance of queries, especially when dealing with large datasets, to ensure efficient access and updates.
 
-## 5. Conclusion
+## 6. API creation and usage
+
+- Targets: (GET, PUT, POST, PATCH, DELETE) are setup for usage at `<url>/api/targets` and dynamic items `<url>/api/targets/[id]`
+- History: (GET, POST, DELETE) are setup for usage at `<url>/api/history` and dynamic items `<url>/api/history/[id]`
+
+## 7. Conclusion
 
 This strategy provides a robust framework for managing and tracking changes to pipeline statuses of targets. By implementing thorough validation, logging, and edge case handling, we can ensure a reliable and user-friendly experience while maintaining data integrity. Regular monitoring and maintenance will further enhance the system's resilience and performance.
