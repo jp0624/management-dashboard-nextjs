@@ -23,11 +23,11 @@ const BarChart = ({ targets, activeFilters }: any) => {
 				}),
 				backgroundColor: activeFilters.map(
 					(_: any, index: number) =>
-						`rgba(${index * 50}, ${100 + index * 30}, ${150}, 0.5)`
+						`rgba(${index * 60}, ${100 + index * 40}, ${150}, 0.5)`
 				),
 				borderColor: activeFilters.map(
 					(_: any, index: number) =>
-						`rgba(${index * 50}, ${100 + index * 30}, ${150}, 1)`
+						`rgba(${index * 60}, ${100 + index * 40}, ${150}, 1)`
 				),
 				borderWidth: 3,
 			},

@@ -82,5 +82,6 @@ button:hover:after {
 }
 
 .shadow-btm-mid {
-	box-shadow: 0 35px 12px -35px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 40px 12px -40px rgba(0, 0, 0, 0.25);
+	/* , 0 -40px 12px -40px rgba(0, 0, 0, 0.25); */
 }

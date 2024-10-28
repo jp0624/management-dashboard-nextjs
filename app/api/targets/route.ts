@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 	try {
 		const targets = await readFile(TARGETS_JSON_PATH)
 		const newTarget: Target = {
-			id: Date.now(), // Or any other logic to create a unique ID
+			id: Date.now() + Math.floor(Math.random() * 100000 + 1), // Or any other logic to create a unique ID
 			...body,
 		}
 
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 		const history = await readFile(HISTORY_JSON_PATH)
 		// Create a history entry
 		const historyEntry = {
-			id: Date.now(),
+			id: Date.now() + Math.floor(Math.random() * 100000 + 1),
 			name: newTarget.name,
 			action: 'add',
 			changedAt: new Date().toISOString(),
