@@ -54,7 +54,7 @@ export async function PATCH(
 
 		// Create a history entry
 		const historyEntry = {
-			id: Date.now(),
+			id: parseInt(Date.now() + '' + Math.floor(Math.random() * 100000 + 1)),
 			targetId: parseInt(id, 10),
 			oldStatus,
 			newStatus: pipelineStatus,
@@ -100,7 +100,7 @@ export async function PUT(
 		targets[targetIndex].pipelineStatus = pipelineStatus
 
 		const historyEntry = {
-			id: Date.now(),
+			id: parseInt(Date.now() + '' + Math.floor(Math.random() * 100000 + 1)),
 			targetId: parseInt(id, 10),
 			oldStatus,
 			newStatus: pipelineStatus,
@@ -142,7 +142,7 @@ export async function DELETE(
 		// Create a history entry
 		const deletedTarget = targets[targetIndex]
 		const historyEntry = {
-			id: Date.now(),
+			id: parseInt(Date.now() + '' + Math.floor(Math.random() * 100000 + 1)),
 			name: deletedTarget.name,
 			action: 'delete',
 			changedAt: new Date().toISOString(),
