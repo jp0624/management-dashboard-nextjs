@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { readFile, writeHistory } from '@/app/lib/db'
+import { readFile, writeFile } from '@/app/lib/db'
 import { HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(
@@ -49,7 +49,7 @@ export async function DELETE(
 		}
 
 		history.splice(entryIndex, 1)
-		await writeHistory(history, HISTORY_JSON_PATH)
+		await writeFile(history, HISTORY_JSON_PATH)
 
 		return NextResponse.json({ message: 'History entry deleted successfully' })
 	} catch (error) {

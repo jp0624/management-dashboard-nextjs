@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { readFile, writeTargets, writeHistory } from '@/app/lib/db'
+import { readFile, writeFile } from '@/app/lib/db'
 import { HISTORY_JSON_PATH, TARGETS_JSON_PATH } from '@/app/constants/paths'
 import { Target } from '@/app/types'
 
@@ -43,8 +43,8 @@ export async function POST(request: Request) {
 		}
 		history.push(historyEntry)
 
-		await writeHistory(history, HISTORY_JSON_PATH)
-		await writeTargets(targets, TARGETS_JSON_PATH)
+		await writeFile(history, HISTORY_JSON_PATH)
+		await writeFile(targets, TARGETS_JSON_PATH)
 
 		return NextResponse.json(newTarget)
 	} catch (error) {

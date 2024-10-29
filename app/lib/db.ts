@@ -7,10 +7,6 @@ export const readFile = async (path: string) => {
 	return JSON.parse(fileBuffer.toString())
 }
 
-export const writeTargets = async (targets: any[], path: string) => {
-	await fs.writeFile(path, JSON.stringify(targets, null, 2))
-}
-
-export const writeHistory = async (history: any[], path: string) => {
-	await fs.writeFile(path, JSON.stringify(history, null, 2))
+export const writeFile = async (arr: any[], path: string) => {
+	await fs.writeFile(path, JSON.stringify(arr, null, 2))
 }

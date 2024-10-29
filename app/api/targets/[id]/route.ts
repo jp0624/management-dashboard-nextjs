@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server'
-import { readFile, writeTargets, writeHistory } from '@/app/lib/db'
+import { readFile, writeFile } from '@/app/lib/db'
 import { TARGETS_JSON_PATH, HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(
@@ -65,8 +65,8 @@ export async function PATCH(
 		// Update history
 		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(historyEntry)
-		await writeHistory(history, HISTORY_JSON_PATH) // Save the updated history
-		await writeTargets(targets, TARGETS_JSON_PATH) // Save the updated targets
+		await writeFile(history, HISTORY_JSON_PATH) // Save the updated history
+		await writeFile(targets, TARGETS_JSON_PATH) // Save the updated targets
 
 		return NextResponse.json(targets[targetIndex])
 	} catch (error) {
@@ -110,8 +110,8 @@ export async function PUT(
 
 		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(historyEntry)
-		await writeHistory(history, HISTORY_JSON_PATH)
-		await writeTargets(targets, TARGETS_JSON_PATH)
+		await writeFile(history, HISTORY_JSON_PATH)
+		await writeFile(targets, TARGETS_JSON_PATH)
 
 		return NextResponse.json(targets[targetIndex])
 	} catch (error) {
@@ -154,11 +154,8 @@ export async function DELETE(
 		const history = await readFile(HISTORY_JSON_PATH)
 		history.push(historyEntry)
 
-		// const updatedHistory = history.filter(
-		// 	(entry: { targetId: any }) => entry.targetId !== deletedTarget.id
-		// )
-		await writeTargets(targets, TARGETS_JSON_PATH)
-		await writeHistory(history, HISTORY_JSON_PATH)
+		await writeFile(targets, TARGETS_JSON_PATH)
+		await writeFile(history, HISTORY_JSON_PATH)
 
 		return NextResponse.json({ message: 'Target deleted successfully' })
 	} catch (error) {
