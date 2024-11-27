@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa'
 import useModal from '@/app/hooks/useModal'
-import { TargetTableProps } from '../types'
+import { TargetTableProps } from '@/app/types'
 
 const TargetTable: React.FC<TargetTableProps> = ({
 	targets,
@@ -25,8 +25,8 @@ const TargetTable: React.FC<TargetTableProps> = ({
 	}
 
 	return (
-		<div className='flex-1'>
-			<div className='grid grid-cols-1 gap-5'>
+		<>
+			<div className='flex flex-col gap-5'>
 				{targets.length === 0 && (
 					<p className='w-full text-center'>No matching targets found.</p>
 				)}
@@ -123,7 +123,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	)
 }
 

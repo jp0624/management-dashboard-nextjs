@@ -1,17 +1,6 @@
+import { AddTargetProps } from '@/app/types'
 import React, { useState } from 'react'
 import { FaPlus, FaMinus, FaTimesCircle } from 'react-icons/fa'
-
-interface AddTargetProps {
-	onAddTarget: (newTarget: {
-		name: string
-		description: string
-		pipelineStatus: string | null
-		markets: string[]
-	}) => void
-	pipelineStatusOptions: string[]
-	isOpen: boolean
-	onClose: () => void
-}
 
 const AddTarget: React.FC<AddTargetProps> = ({
 	onAddTarget,

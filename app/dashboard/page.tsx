@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { FaPlus } from 'react-icons/fa'
-import useTargets from '../hooks/useTargets'
-import useModal from '../hooks/useModal'
-import TargetTable from '../components/TargetTable'
-import BarChart from '../components/BarChart'
-import DataFilter from '../components/DataFilters'
-import AddTarget from '../components/modals/AddTargetModal'
-import HistoryModal from '../components/modals/HistoryModal'
+import useTargets from '@/app/hooks/useTargets'
+import useModal from '@/app/hooks/useModal'
+import TargetTable from '@/app/components/TargetTable'
+import BarChart from '@/app/components/BarChart'
+import DataFilter from '@/app/components/DataFilters'
+import AddTarget from '@/app/components/modals/AddTargetModal'
+import HistoryModal from '@/app/components/modals/HistoryModal'
 
 const DashboardPage = () => {
 	const {

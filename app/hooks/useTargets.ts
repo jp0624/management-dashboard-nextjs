@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // hooks/useTargets.ts
 import { useEffect, useState } from 'react'
-import { API_PATH, TARGETS_FOLDER } from '../constants/paths'
+import { API_PATH, TARGETS_FOLDER } from '@/app/constants/paths'
 
 export interface TargetData {
 	id: number

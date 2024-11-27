@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { readFile, writeFile } from '@/app/lib/db'
+import { readFile, writeFile } from '@/app/utils/db'
 import { HISTORY_JSON_PATH } from '@/app/constants/paths'
 import { StatusChangeHistory } from '@/app/types'
 

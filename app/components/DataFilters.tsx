@@ -1,10 +1,5 @@
 import React from 'react'
-
-interface DataFilterProps {
-	activeStatuses: string[]
-	pipelineStatusOptions: string[]
-	toggleStatus: (status: string) => void
-}
+import { DataFilterProps } from '@/app/types'
 
 const DataFilter: React.FC<DataFilterProps> = ({
 	activeStatuses,

@@ -5,12 +5,7 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { FaTimesCircle } from 'react-icons/fa'
 import { apiFetch } from '@/app/api/apiClient'
 import { HISTORY_FOLDER } from '@/app/constants/paths'
-import { StatusChangeHistory } from '../../types'
-
-interface Target {
-	id: number
-	name: string
-}
+import { StatusChangeHistory, Target } from '@/app/types'
 
 const HistoryModal = ({
 	isOpen,

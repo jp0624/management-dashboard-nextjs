@@ -1,17 +1,7 @@
-export interface Target {
-	id: number
-	name: string
-	description: string
-	pipelineStatus: string | null
-	markets: string[]
-}
-
-export interface StatusChangeHistory {
-	id: number
-	targetId: number
-	oldStatus: string | null
-	newStatus: string | null
-	changedAt: string // ISO format date string
+export interface DataFilterProps {
+	activeStatuses: string[]
+	pipelineStatusOptions: string[]
+	toggleStatus: (status: string) => void
 }
 
 export interface TargetData {
@@ -43,4 +33,21 @@ export interface StatusChangeHistory {
 	changedAt: string
 	action?: 'add' | 'delete' | 'status'
 	name?: string
+}
+
+interface AddTargetProps {
+	onAddTarget: (newTarget: {
+		name: string
+		description: string
+		pipelineStatus: string | null
+		markets: string[]
+	}) => void
+	pipelineStatusOptions: string[]
+	isOpen: boolean
+	onClose: () => void
+}
+
+interface Target {
+	id: number
+	name: string
 }
