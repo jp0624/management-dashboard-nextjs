@@ -1,27 +1,7 @@
 import React from 'react'
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa'
 import useModal from '@/app/hooks/useModal'
-
-interface TargetData {
-	id: number
-	name: string
-	description: string
-	pipelineStatus: string | null
-	markets: string[]
-}
-
-interface TargetTableProps {
-	targets: TargetData[]
-	editingTargetId: number | null
-	newPipelineStatus: string | null
-	setEditingTargetId: (id: number | null) => void
-	setNewPipelineStatus: (status: string | null) => void
-	savePipelineStatus: (id: number) => void
-	deleteTarget: (id: number) => void
-	pipelineStatusOptions: string[]
-	handleEditTarget: (target: TargetData) => void
-	handleAddTarget: () => void // Add this prop for adding new target
-}
+import { TargetTableProps } from '../types'
 
 const TargetTable: React.FC<TargetTableProps> = ({
 	targets,
@@ -53,7 +33,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 				{targets.map((target) => (
 					<div
 						key={target.id}
-						className='border border-gray-300 p-4 rounded shadow-btm-mid flex flex-col'
+						className='border border-gray-300 p-4 rounded shadow-btm-mid flex flex-col bg-white'
 					>
 						<div className='flex flex-row justify-between items-center'>
 							<h3 className='text-lg font-bold'>{target.name}</h3>

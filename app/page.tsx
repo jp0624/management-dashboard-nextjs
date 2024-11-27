@@ -4,7 +4,7 @@ import { FaAngleRight } from 'react-icons/fa'
 export default function Home() {
 	return (
 		<>
-			<main className='flex min-h-screen flex-col items-center justify-center text-center'>
+			<main className='flex min-h-screen flex-col items-center justify-center text-center bg-slate-100'>
 				<h1 className='text-2xl lg:text-4xl font-bold mb-2'>
 					Target Management Dashboard
 				</h1>

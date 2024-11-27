@@ -3,11 +3,11 @@
 import { FaPlus } from 'react-icons/fa'
 import useTargets from '../hooks/useTargets'
 import useModal from '../hooks/useModal'
-import TargetTable from '@/components/TargetTable'
-import BarChart from '@/components/BarChart'
-import DataFilter from '@/components/DataFilter'
-import AddTarget from '@/components/AddTarget'
-import HistoryModal from '@/components/HistoryModal'
+import TargetTable from '../components/TargetTable'
+import BarChart from '../components/BarChart'
+import DataFilter from '../components/DataFilters'
+import AddTarget from '../components/modals/AddTargetModal'
+import HistoryModal from '../components/modals/HistoryModal'
 
 const DashboardPage = () => {
 	const {
@@ -106,7 +106,7 @@ const DashboardPage = () => {
 				</div>
 			) : (
 				<section className='h-5/6 flex justify-normal flex-col w-full flex-1 gap-5 lg:px-10 lg:py-5 px-2 py-2 lg:flex-row lg:justify-center'>
-					<div className='w-full lg:w-1/2 flex-1 items-center flex justify-center rounded shadow-btm-mid border border-gray-300 p-4'>
+					<div className='w-full lg:w-1/2 flex-1 items-center flex justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white'>
 						<BarChart
 							targets={filteredTargets}
 							activeFilters={activeStatuses}

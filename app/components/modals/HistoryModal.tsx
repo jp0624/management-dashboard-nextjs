@@ -5,16 +5,7 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { FaTimesCircle } from 'react-icons/fa'
 import { apiFetch } from '@/app/api/apiClient'
 import { HISTORY_FOLDER } from '@/app/constants/paths'
-
-interface StatusChangeHistory {
-	id: number
-	targetId?: number
-	oldStatus?: string | null
-	newStatus?: string | null
-	changedAt: string
-	action?: 'add' | 'delete' | 'status'
-	name?: string
-}
+import { StatusChangeHistory } from '../../types'
 
 interface Target {
 	id: number
