@@ -21,8 +21,8 @@ const LineChart = ({ targets, activeFilters }: any) => {
 								: target.pipelineStatus) === status
 					).length
 				}),
-				backgroundColor: 'rgba(120, 80, 150, 0.25)', // Light fill color
-				borderColor: 'rgba(120, 80, 150, 0.75)', // Line color
+				backgroundColor: 'rgba(255,255,255, 0.2)', // Light fill color
+				borderColor: 'rgba(255,255,255, 1)', // Line color
 				borderWidth: 2,
 				tension: 0.4, // Smooth lines
 				fill: true, // Fill area under the line
@@ -39,6 +39,10 @@ const LineChart = ({ targets, activeFilters }: any) => {
 				title: {
 					display: true,
 					text: 'Status',
+					color: '#ffffff', // X-axis title color
+				},
+				ticks: {
+					color: '#ffffff', // X-axis labels color
 				},
 			},
 			y: {
@@ -46,12 +50,24 @@ const LineChart = ({ targets, activeFilters }: any) => {
 				title: {
 					display: true,
 					text: 'Count',
+					color: '#ffffff', // Y-axis title color
+				},
+				ticks: {
+					color: '#ffffff', // Y-axis labels color
 				},
 			},
 		},
 		plugins: {
 			legend: {
-				display: false, // Show the legend
+				labels: {
+					color: '#ffffff', // Legend labels color
+				},
+				display: false, // Hide the legend
+			},
+			tooltip: {
+				titleColor: '#ffffff', // Tooltip title color
+				bodyColor: '#ffffff', // Tooltip body text color
+				backgroundColor: 'rgba(0, 0, 0, 0.8)', // Tooltip background color
 			},
 		},
 	}

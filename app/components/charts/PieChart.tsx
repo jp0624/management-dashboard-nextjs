@@ -22,12 +22,10 @@ const PieChart = ({ targets, activeFilters }: any) => {
 					).length
 				}),
 				backgroundColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 0.5)`
+					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.15})`
 				),
 				borderColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 1)`
+					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.25})`
 				),
 				borderWidth: 3,
 			},
@@ -58,7 +56,7 @@ const PieChart = ({ targets, activeFilters }: any) => {
 			<div className='flex w-3/4 items-center justify-center'>
 				<Pie height={300} width={300} data={data} options={options} />
 			</div>
-			<div className='w-full flex flex-stretch flex-row gap-3 mt-2 flex-wrap justify-center items-center text-xs lg:text-md'>
+			<div className='w-full flex flex-stretch flex-row gap-3 mt-2 flex-wrap justify-center items-center text-xs lg:text-md border border-gray-300 p-4 rounded shadow-btm-mid bg-white'>
 				{activeFilters.map((status: any, index: number) => (
 					<>
 						<div key={index} className='flex flex-row items-center'>

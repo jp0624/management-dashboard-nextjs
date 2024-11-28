@@ -22,12 +22,10 @@ const BarChart = ({ targets, activeFilters }: any) => {
 					).length
 				}),
 				backgroundColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 0.5)`
+					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.15})`
 				),
 				borderColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 1)`
+					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.25})`
 				),
 				borderWidth: 3,
 			},
@@ -42,6 +40,10 @@ const BarChart = ({ targets, activeFilters }: any) => {
 				title: {
 					display: true,
 					text: 'Status',
+					color: '#ffffff', // X-axis title color
+				},
+				ticks: {
+					color: '#ffffff', // X-axis labels color
 				},
 			},
 			y: {
@@ -49,22 +51,32 @@ const BarChart = ({ targets, activeFilters }: any) => {
 				title: {
 					display: true,
 					text: 'Count',
+					color: '#ffffff', // Y-axis title color
+				},
+				ticks: {
+					color: '#ffffff', // Y-axis labels color
 				},
 			},
 		},
 		plugins: {
 			legend: {
-				display: false, // Hide the legend
+				labels: {
+					color: '#ffffff', // Legend labels color
+				},
+				display: false,
+			},
+			tooltip: {
+				titleColor: '#ffffff', // Tooltip title color
+				bodyColor: '#ffffff', // Tooltip body text color
+				backgroundColor: 'rgba(0, 0, 0, 0.8)', // Tooltip background color
 			},
 		},
 	}
 
 	return (
-		<>
-			<div className='flex w-full items-center'>
-				<Bar height={300} width={300} data={data} options={options} />
-			</div>
-		</>
+		<div className='flex w-full items-center'>
+			<Bar height={300} width={300} data={data} options={options} />
+		</div>
 	)
 }
 

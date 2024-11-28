@@ -103,7 +103,7 @@ const DashboardPage = () => {
 
 	return (
 		<main className='lg:h-svh h-full flex flex-col min-h-screen items-center lg:justify-center'>
-			<header className='lg:h-1/6 flex flex-col lg:flex-row items-center justify-between py-5 shadow-btm-mid w-full bg-black text-white'>
+			<header className='lg:h-1/6 flex flex-col lg:flex-row items-center justify-between py-5 shadow-sm w-full border-b border-b-blue-500 bg-white backdrop-blur-sm bg-opacity-15 text-white'>
 				<div className='flex flex-col flex-grow w-full'>
 					<h1 className='text-lg lg:text-3xl font-bold w-full mb-0 text-center'>
 						Target Management Dashboard
@@ -146,7 +146,7 @@ const DashboardPage = () => {
 									} ${
 										(component === 'pieChart' || component === 'barChart') &&
 										'flex-col gap-5 justify-center'
-									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
+									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col rounded border border-blue-500 shadow-sm shadow-black p-4 bg-white backdrop-blur-sm bg-opacity-15`}
 								>
 									{component === 'barChart' ? (
 										<>
