@@ -17,7 +17,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 	const { isModalOpen, closeModal, handleConfirm, modalOptions } = useModal()
 
 	const handleDeleteClick = (id: number) => {
-		deleteTarget(id)
+		deleteTarget(id) // Pass id as a number for deletion
 	}
 
 	const handleSaveClick = (id: number) => {
@@ -26,7 +26,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 
 	return (
 		<>
-			<div className='flex flex-col gap-5'>
+			<div className='flex flex-col gap-5 w-full'>
 				{targets.length === 0 && (
 					<p className='w-full text-center'>No matching targets found.</p>
 				)}
@@ -38,7 +38,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 						<div className='flex flex-row justify-between items-center'>
 							<h3 className='text-lg font-bold'>{target.name}</h3>
 							<button
-								onClick={() => handleDeleteClick(target.id)}
+								onClick={() => handleDeleteClick(target.id)} // Ensure target.id is passed as a number
 								className='bg-red-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
 							>
 								<FaTimesCircle /> Delete
@@ -114,7 +114,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 								Cancel
 							</button>
 							<button
-								onClick={handleConfirm} // Calls the handleConfirm which in turn calls onConfirm
+								onClick={handleConfirm}
 								className='bg-red-500 text-white px-4 py-2 rounded'
 							>
 								Delete

@@ -2,7 +2,7 @@ import { AddTargetProps } from '@/app/types'
 import React, { useState } from 'react'
 import { FaPlus, FaMinus, FaTimesCircle } from 'react-icons/fa'
 
-const AddTarget: React.FC<AddTargetProps> = ({
+const AddTargetModal: React.FC<AddTargetProps> = ({
 	onAddTarget,
 	pipelineStatusOptions,
 	isOpen,
@@ -148,4 +148,4 @@ const AddTarget: React.FC<AddTargetProps> = ({
 	)
 }
 
-export default AddTarget
+export default AddTargetModal
