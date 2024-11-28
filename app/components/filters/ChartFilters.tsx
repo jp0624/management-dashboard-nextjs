@@ -6,7 +6,7 @@ interface ChartFiltersProps {
 	toggleActiveComponent: (component: string) => void
 }
 
-const ChartFilters: React.FC<ChartFiltersProps> = ({
+const ChartFilter: React.FC<ChartFiltersProps> = ({
 	activeComponents,
 	toggleActiveComponent,
 }) => {
@@ -41,4 +41,4 @@ const ChartFilters: React.FC<ChartFiltersProps> = ({
 	)
 }
 
-export default ChartFilters
+export default ChartFilter

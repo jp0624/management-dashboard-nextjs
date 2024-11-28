@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server'
-import { readFile, writeFile } from '@/app/utils/db'
+import { readFile, writeFile } from '@/app/utils/fs'
 import { TARGETS_JSON_PATH, HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(

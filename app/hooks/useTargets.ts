@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// hooks/useTargets.ts
+
 import { useEffect, useState } from 'react'
 import { API_PATH, TARGETS_FOLDER } from '@/app/constants/paths'
-
-export interface TargetData {
-	id: number
-	name: string
-	description: string
-	pipelineStatus: string | null
-	markets: string[]
-}
+import { TargetData } from '@/app/types'
 
 const useTargets = () => {
 	const [dataLoading, setDataLoading] = useState<boolean>(true)

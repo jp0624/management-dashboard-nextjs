@@ -1,16 +1,20 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FaPlus, FaBook } from 'react-icons/fa'
 import useTargets from '@/app/hooks/useTargets'
-import useModal from '@/app/hooks/useModal'
+
 import BarChart from '@/app/components/charts/BarChart'
 import PieChart from '@/app/components/charts/PieChart'
 import TargetTable from '@/app/components/charts/TargetTable'
+
+import ChartFilter from '../components/filters/ChartFilters'
+import DataFilter from '@/app/components/filters/DataFilters'
+
+import useModal from '@/app/hooks/useModal'
 import AddTargetModal from '@/app/components/modals/AddTargetModal'
 import HistoryModal from '@/app/components/modals/HistoryModal'
-import ChartFilters from '../components/filters/ChartFilters'
-import DataFilter from '@/app/components/filters/DataFilters'
+import TargetUtils from '@/app/components/utils/TargetUtils'
+
 import { TargetData } from '@/app/types'
 
 const DashboardPage = () => {
@@ -36,7 +40,8 @@ const DashboardPage = () => {
 		deleteTarget,
 	} = useTargets()
 
-	const { modalType, openModal, closeModal, modalOptions } = useModal()
+	const { modalType, openModal, closeModal, modalOptions, handleConfirm } =
+		useModal()
 
 	const filteredTargets = targets.filter(
 		(target) =>
@@ -64,16 +69,32 @@ const DashboardPage = () => {
 		)
 	}
 
-	const handleAddTarget = (newTarget: TargetData) => {
-		addNewTarget(newTarget)
-		closeModal()
+	const handleAddTargetClick = () => {
+		openModal('add', {
+			title: 'Add New Target',
+			onConfirm: (newTarget: TargetData) => {
+				addNewTarget(newTarget)
+				closeModal()
+			},
+		})
 	}
 
-	const handleDeleteTarget = (targetId: number) => {
+	// Function to open the delete modal
+	const handleDeleteTarget = (id: number) => {
+		console.log('DELETE MODAL: ', id)
 		openModal('delete', {
-			title: 'Confirm Deletion',
+			title: 'Confirm Deletion!',
 			message: 'Are you sure you want to delete this target?',
-			onConfirm: () => deleteTarget(targetId),
+			onConfirm: () => {
+				deleteTarget(id) // Perform the actual deletion
+				closeModal() // Close the modal after deletion
+			},
+		})
+	}
+
+	const handleViewHistoryClick = () => {
+		openModal('history', {
+			title: 'View History',
 		})
 	}
 
@@ -91,28 +112,11 @@ const DashboardPage = () => {
 					/>
 				</div>
 				<div className='flex flex-col flex-1 w-full gap-5 lg:px-10 lg:py-5 px-2 py-2 lg:justify-center'>
-					<div className='flex flex-row space-x-2'>
-						<button
-							onClick={() =>
-								openModal('add', {
-									title: 'Add New Target',
-									onConfirm: handleAddTarget,
-								})
-							}
-							className='bg-green-500 text-white px-4 py-2 rounded flex items-center gap-2'
-						>
-							<FaPlus />
-							<span>Add Target</span>
-						</button>
-						<button
-							onClick={() => openModal('history', { title: 'View History' })}
-							className='bg-blue-500 text-white px-4 py-2 rounded flex items-center gap-2'
-						>
-							<FaBook />
-							<span>History</span>
-						</button>
-					</div>
-					<ChartFilters
+					<TargetUtils
+						onAddTarget={handleAddTargetClick}
+						onViewHistory={handleViewHistoryClick}
+					/>
+					<ChartFilter
 						activeComponents={activeComponents}
 						toggleActiveComponent={toggleActiveComponent}
 					/>
@@ -127,12 +131,16 @@ const DashboardPage = () => {
 				</div>
 			) : (
 				<section className='lg:h-5/6 h-full flex flex-col w-full gap-5 lg:px-10 px-2 py-2 lg:flex-row lg:justify-center'>
-					{['barChart', 'pieChart'].map(
+					{['barChart', 'pieChart', 'targetTable'].map(
 						(component) =>
 							activeComponents.includes(component) && (
 								<div
 									key={component}
-									className='w-full lg:w-1/3 flex items-center justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white'
+									className={`${
+										component === 'targetTable'
+											? 'scrollbar-targets overflow-y-auto'
+											: 'items-center'
+									}  w-full lg:w-1/3 flex flex-1 justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
 								>
 									{component === 'barChart' ? (
 										<BarChart
@@ -140,40 +148,30 @@ const DashboardPage = () => {
 											activeFilters={activeStatuses}
 											setActiveFilters={setActiveStatuses}
 										/>
-									) : (
+									) : component === 'pieChart' ? (
 										<PieChart
 											targets={filteredTargets}
 											activeFilters={activeStatuses}
 											setActiveFilters={setActiveStatuses}
 										/>
-									)}
+									) : component === 'targetTable' ? (
+										<TargetTable
+											targets={filteredTargets}
+											editingTargetId={editingTargetId}
+											setEditingTargetId={setEditingTargetId}
+											newPipelineStatus={newPipelineStatus}
+											setNewPipelineStatus={setNewPipelineStatus}
+											pipelineStatusOptions={pipelineStatusOptions}
+											handleEditTarget={(target) => {
+												setEditingTargetId(target.id)
+												setNewPipelineStatus(target.pipelineStatus || 'Not Set')
+											}}
+											deleteTarget={handleDeleteTarget}
+											savePipelineStatus={savePipelineStatus}
+										/>
+									) : null}
 								</div>
 							)
-					)}
-
-					{activeComponents.includes('targetTable') && (
-						<div className='w-full lg:w-1/3 flex justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white overflow-y-auto mb-2'>
-							<TargetTable
-								targets={filteredTargets}
-								editingTargetId={editingTargetId}
-								setEditingTargetId={setEditingTargetId}
-								newPipelineStatus={newPipelineStatus}
-								setNewPipelineStatus={setNewPipelineStatus}
-								pipelineStatusOptions={pipelineStatusOptions}
-								handleEditTarget={(target) => {
-									setEditingTargetId(target.id)
-									setNewPipelineStatus(target.pipelineStatus || 'Not Set')
-								}}
-								deleteTarget={handleDeleteTarget}
-								savePipelineStatus={savePipelineStatus}
-								handleAddTarget={() =>
-									openModal('add', {
-										title: 'Add New Target',
-										onConfirm: handleAddTarget,
-									})
-								}
-							/>
-						</div>
 					)}
 				</section>
 			)}
@@ -189,26 +187,25 @@ const DashboardPage = () => {
 				onClose={closeModal}
 				targets={targets}
 			/>
-			{modalType === 'delete' && modalOptions?.onConfirm && (
-				<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-					<div className='bg-white p-6 rounded'>
-						<h2 className='text-lg'>{modalOptions.title}</h2>
+
+			{/* Modal for Confirmation */}
+			{modalType === 'delete' && modalOptions && (
+				<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10'>
+					<div className='bg-white p-6 rounded shadow-md text-slate-800'>
+						<h2 className='text-lg font-bold'>{modalOptions.title}</h2>
 						<p>{modalOptions.message}</p>
-						<div className='flex space-x-2 mt-4'>
+						<div className='mt-4 flex justify-end'>
 							<button
-								className='bg-red-500 text-white px-4 py-2 rounded'
-								onClick={() => {
-									modalOptions.onConfirm?.()
-									closeModal()
-								}}
-							>
-								Confirm
-							</button>
-							<button
-								className='bg-gray-500 text-white px-4 py-2 rounded'
 								onClick={closeModal}
+								className='bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2'
 							>
 								Cancel
+							</button>
+							<button
+								onClick={handleConfirm}
+								className='bg-red-500 text-white px-4 py-2 rounded'
+							>
+								Delete
 							</button>
 						</div>
 					</div>

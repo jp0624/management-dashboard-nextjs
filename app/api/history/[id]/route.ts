@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { readFile, writeFile } from '@/app/utils/db'
+import { readFile, writeFile } from '@/app/utils/fs'
 import { HISTORY_JSON_PATH } from '@/app/constants/paths'
 
 export async function GET(

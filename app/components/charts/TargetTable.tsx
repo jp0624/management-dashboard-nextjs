@@ -1,6 +1,5 @@
 import React from 'react'
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa'
-import useModal from '@/app/hooks/useModal'
 import { TargetTableProps } from '@/app/types'
 
 const TargetTable: React.FC<TargetTableProps> = ({
@@ -14,12 +13,6 @@ const TargetTable: React.FC<TargetTableProps> = ({
 	pipelineStatusOptions,
 	handleEditTarget,
 }) => {
-	const { isModalOpen, closeModal, handleConfirm, modalOptions } = useModal()
-
-	const handleDeleteClick = (id: number) => {
-		deleteTarget(id) // Pass id as a number for deletion
-	}
-
 	const handleSaveClick = (id: number) => {
 		savePipelineStatus(id)
 	}
@@ -38,7 +31,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 						<div className='flex flex-row justify-between items-center'>
 							<h3 className='text-lg font-bold'>{target.name}</h3>
 							<button
-								onClick={() => handleDeleteClick(target.id)} // Ensure target.id is passed as a number
+								onClick={() => deleteTarget(target.id)} // Ensure target.id is passed as a number
 								className='bg-red-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
 							>
 								<FaTimesCircle /> Delete
@@ -99,30 +92,6 @@ const TargetTable: React.FC<TargetTableProps> = ({
 					</div>
 				))}
 			</div>
-
-			{/* Modal for Confirmation */}
-			{isModalOpen && modalOptions && (
-				<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10'>
-					<div className='bg-white p-6 rounded shadow-md text-slate-800'>
-						<h2 className='text-lg font-bold'>{modalOptions.title}</h2>
-						<p>{modalOptions.message}</p>
-						<div className='mt-4 flex justify-end'>
-							<button
-								onClick={closeModal}
-								className='bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2'
-							>
-								Cancel
-							</button>
-							<button
-								onClick={handleConfirm}
-								className='bg-red-500 text-white px-4 py-2 rounded'
-							>
-								Delete
-							</button>
-						</div>
-					</div>
-				</div>
-			)}
 		</>
 	)
 }

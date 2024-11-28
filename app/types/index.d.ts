@@ -22,7 +22,6 @@ export interface TargetTableProps {
 	deleteTarget: (id: number) => void
 	pipelineStatusOptions: string[]
 	handleEditTarget: (target: TargetData) => void
-	handleAddTarget: () => void // Add this prop for adding new target
 }
 
 export interface StatusChangeHistory {
@@ -35,7 +34,7 @@ export interface StatusChangeHistory {
 	name?: string
 }
 
-interface AddTargetProps {
+export interface AddTargetProps {
 	onAddTarget: (newTarget: {
 		name: string
 		description: string
@@ -47,7 +46,20 @@ interface AddTargetProps {
 	onClose: () => void
 }
 
-interface Target {
+export interface Target {
 	id: number
 	name: string
+}
+
+export interface TargetUtilsProps {
+	onAddTarget: () => void
+	onViewHistory: () => void
+}
+
+export interface TargetData {
+	id: number
+	name: string
+	description: string
+	pipelineStatus: string | null
+	markets: string[]
 }
