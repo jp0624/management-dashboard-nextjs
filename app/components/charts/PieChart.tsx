@@ -58,7 +58,7 @@ const PieChart = ({ targets, activeFilters }: any) => {
 			<div className='flex w-3/4 items-center justify-center'>
 				<Pie height={300} width={300} data={data} options={options} />
 			</div>
-			<div className='w-full flex flex-stretch flex-row gap-3 mt-5 flex-wrap justify-center items-center text-xs lg:text-md'>
+			<div className='w-full flex flex-stretch flex-row gap-3 mt-2 flex-wrap justify-center items-center text-xs lg:text-md'>
 				{activeFilters.map((status: any, index: number) => (
 					<>
 						<div key={index} className='flex flex-row items-center'>

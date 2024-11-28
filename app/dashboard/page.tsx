@@ -143,9 +143,10 @@ const DashboardPage = () => {
 										component === 'targetTable'
 											? 'scrollbar-targets overflow-y-auto'
 											: 'items-center'
-									} ${component === 'pieChart' && 'flex-col gap-5'} ${
-										component === 'donutChart' && 'flex-col gap-5'
-									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
+									} ${
+										(component === 'pieChart' || component === 'barChart') &&
+										'flex-col gap-5 justify-center'
+									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
 								>
 									{component === 'barChart' ? (
 										<>
