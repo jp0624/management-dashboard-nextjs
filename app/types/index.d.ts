@@ -14,6 +14,7 @@ export interface TargetData {
 
 export interface TargetTableProps {
 	targets: TargetData[]
+	activeStatuses: string[]
 	editingTargetId: number | null
 	newPipelineStatus: string | null
 	setEditingTargetId: (id: number | null) => void

@@ -149,14 +149,17 @@ const DashboardPage = () => {
 											setActiveFilters={setActiveStatuses}
 										/>
 									) : component === 'pieChart' ? (
-										<PieChart
-											targets={filteredTargets}
-											activeFilters={activeStatuses}
-											setActiveFilters={setActiveStatuses}
-										/>
+										<>
+											<PieChart
+												targets={filteredTargets}
+												activeFilters={activeStatuses}
+												setActiveFilters={setActiveStatuses}
+											/>
+										</>
 									) : component === 'targetTable' ? (
 										<TargetTable
 											targets={filteredTargets}
+											activeStatuses={activeStatuses}
 											editingTargetId={editingTargetId}
 											setEditingTargetId={setEditingTargetId}
 											newPipelineStatus={newPipelineStatus}
