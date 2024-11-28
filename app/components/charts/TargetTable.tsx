@@ -30,13 +30,13 @@ const TargetTable: React.FC<TargetTableProps> = ({
 							key={target.id}
 							className='border border-gray-300 p-4 rounded shadow-btm-mid flex flex-col bg-white'
 						>
-							<div className='flex flex-row justify-between items-center'>
+							<div className='flex flex-row justify-between items-center mb-2'>
 								<h3 className='text-lg font-bold'>{target.name}</h3>
 								<button
 									onClick={() => deleteTarget(target.id)} // Ensure target.id is passed as a number
-									className='bg-red-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
+									className=' text-red-500 text-2xl rounded-full flex items-center justify-center flex-row gap-2'
 								>
-									<FaTimesCircle /> Delete
+									<FaTimesCircle />
 								</button>
 							</div>
 							<p className='text-gray-500'>{target.description}</p>

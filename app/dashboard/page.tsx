@@ -5,6 +5,7 @@ import useTargets from '@/app/hooks/useTargets'
 
 import BarChart from '@/app/components/charts/BarChart'
 import PieChart from '@/app/components/charts/PieChart'
+import DonutChart from '@/app/components/charts/DonutChart'
 import TargetTable from '@/app/components/charts/TargetTable'
 
 import ChartFilter from '../components/filters/ChartFilters'
@@ -16,11 +17,13 @@ import HistoryModal from '@/app/components/modals/HistoryModal'
 import TargetUtils from '@/app/components/utils/TargetUtils'
 
 import { TargetData } from '@/app/types'
+import LineChart from '../components/charts/LineChart'
 
 const DashboardPage = () => {
 	const [activeComponents, setActiveComponents] = useState<string[]>([
 		'barChart',
 		'pieChart',
+		'donutChart',
 		'targetTable',
 	])
 
@@ -140,16 +143,30 @@ const DashboardPage = () => {
 										component === 'targetTable'
 											? 'scrollbar-targets overflow-y-auto'
 											: 'items-center'
-									}  w-full lg:w-1/3 flex flex-1 justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
+									} ${component === 'pieChart' && 'flex-col gap-5'} ${
+										component === 'donutChart' && 'flex-col gap-5'
+									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col justify-center rounded shadow-btm-mid border border-gray-300 p-4 bg-white`}
 								>
 									{component === 'barChart' ? (
-										<BarChart
-											targets={filteredTargets}
-											activeFilters={activeStatuses}
-											setActiveFilters={setActiveStatuses}
-										/>
+										<>
+											<DonutChart
+												targets={filteredTargets}
+												activeFilters={activeStatuses}
+												setActiveFilters={setActiveStatuses}
+											/>
+											<BarChart
+												targets={filteredTargets}
+												activeFilters={activeStatuses}
+												setActiveFilters={setActiveStatuses}
+											/>
+										</>
 									) : component === 'pieChart' ? (
 										<>
+											<LineChart
+												targets={filteredTargets}
+												activeFilters={activeStatuses}
+												setActiveFilters={setActiveStatuses}
+											/>
 											<PieChart
 												targets={filteredTargets}
 												activeFilters={activeStatuses}

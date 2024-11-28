@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js'
 
 // Register chart.js components
 Chart.register(...registerables)
 
-const PieChart = ({ targets, activeFilters }: any) => {
+const DonutChart = ({ targets, activeFilters }: any) => {
 	// Prepare data for the chart
 	const data = {
 		labels: activeFilters.sort(), // Use active filters as labels
@@ -55,9 +55,6 @@ const PieChart = ({ targets, activeFilters }: any) => {
 
 	return (
 		<>
-			<div className='flex w-3/4 items-center justify-center'>
-				<Pie height={300} width={300} data={data} options={options} />
-			</div>
 			<div className='w-full flex flex-stretch flex-row gap-3 mt-5 flex-wrap justify-center items-center text-xs lg:text-md'>
 				{activeFilters.map((status: any, index: number) => (
 					<>
@@ -75,8 +72,11 @@ const PieChart = ({ targets, activeFilters }: any) => {
 					</>
 				))}
 			</div>
+			<div className='flex w-full items-center'>
+				<Doughnut height={300} width={300} data={data} options={options} />
+			</div>
 		</>
 	)
 }
 
-export default PieChart
+export default DonutChart

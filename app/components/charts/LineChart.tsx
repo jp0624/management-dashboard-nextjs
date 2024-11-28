@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Bar } from 'react-chartjs-2'
-import { Chart, registerables } from 'chart.js'
+import { Line } from 'react-chartjs-2'
+import { Chart, registerables, ChartOptions } from 'chart.js'
 
 // Register chart.js components
 Chart.register(...registerables)
 
-const BarChart = ({ targets, activeFilters }: any) => {
+const LineChart = ({ targets, activeFilters }: any) => {
 	// Prepare data for the chart
 	const data = {
 		labels: activeFilters.sort(), // Use active filters as labels
@@ -21,20 +21,17 @@ const BarChart = ({ targets, activeFilters }: any) => {
 								: target.pipelineStatus) === status
 					).length
 				}),
-				backgroundColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 0.5)`
-				),
-				borderColor: activeFilters.map(
-					(_: any, index: number) =>
-						`rgba(${index * 60}, ${index * 40}, ${150}, 1)`
-				),
-				borderWidth: 3,
+				backgroundColor: 'rgba(120, 80, 150, 0.25)', // Light fill color
+				borderColor: 'rgba(120, 80, 150, 0.75)', // Line color
+				borderWidth: 2,
+				tension: 0.4, // Smooth lines
+				fill: true, // Fill area under the line
 			},
 		],
 	}
 
-	const options = {
+	// Explicitly type the options object
+	const options: ChartOptions<'line'> = {
 		responsive: true,
 		maintainAspectRatio: false, // Ensures the chart fits within the container
 		scales: {
@@ -54,18 +51,16 @@ const BarChart = ({ targets, activeFilters }: any) => {
 		},
 		plugins: {
 			legend: {
-				display: false, // Hide the legend
+				display: false, // Show the legend
 			},
 		},
 	}
 
 	return (
-		<>
-			<div className='flex w-full items-center'>
-				<Bar height={300} width={300} data={data} options={options} />
-			</div>
-		</>
+		<div className='flex w-full items-center'>
+			<Line height={300} width={300} data={data} options={options} />
+		</div>
 	)
 }
 
-export default BarChart
+export default LineChart

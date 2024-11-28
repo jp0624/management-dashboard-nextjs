@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaChartBar, FaChartPie, FaTable } from 'react-icons/fa'
+import { FaChartBar, FaChartPie, FaDigitalOcean, FaTable } from 'react-icons/fa'
 
 interface ChartFiltersProps {
 	activeComponents: string[]
@@ -14,6 +14,7 @@ const ChartFilter: React.FC<ChartFiltersProps> = ({
 		{ label: 'Bar Chart', value: 'barChart', icon: 'FaChartBar' },
 		{ label: 'Pie Chart', value: 'pieChart', icon: 'FaChartPie' },
 		{ label: 'Target Table', value: 'targetTable', icon: 'FaTable' },
+		{ label: 'Domnut Chart', value: 'donutChart', icon: 'FaDigitalOcean' },
 	]
 
 	return (
@@ -32,6 +33,7 @@ const ChartFilter: React.FC<ChartFiltersProps> = ({
 						<>
 							{filter.icon === 'FaChartBar' && <FaChartBar />}
 							{filter.icon === 'FaTable' && <FaTable />}
+							{filter.icon === 'FaDigitalOcean' && <FaDigitalOcean />}
 							{filter.icon === 'FaChartPie' && <FaChartPie />}
 						</>
 					}
