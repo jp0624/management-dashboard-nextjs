@@ -1,7 +1,7 @@
 import React from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DeleteTargetModal = ({ modalOptions, onClose, onConfirm }: any) => {
+const DeleteTargetModal = ({ modalOptions, onClose }: any) => {
 	return (
 		<>
 			<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
