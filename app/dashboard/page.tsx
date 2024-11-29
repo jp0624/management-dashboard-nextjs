@@ -18,7 +18,7 @@ import TargetUtils from '@/app/components/utils/TargetUtils'
 
 import { TargetData } from '@/app/types'
 import LineChart from '../components/charts/LineChart'
-import { FaCloudversify } from 'react-icons/fa'
+// import { FaCloudversify } from 'react-icons/fa'
 
 const DashboardPage = () => {
 	const [activeComponents, setActiveComponents] = useState<string[]>([

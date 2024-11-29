@@ -27,7 +27,7 @@
     "id": 3,
     "name": "HealthPlus Innovations",
     "description": "Healthcare technology company developing wearable devices for remote patient monitoring.",
-    "pipelineStatus": "Cold",
+    "pipelineStatus": null,
     "markets": [
       "Healthcare",
       "Wearable Technology",

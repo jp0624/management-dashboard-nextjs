@@ -96,5 +96,13 @@
     "name": "LogiSmart Solutions",
     "action": "delete",
     "changedAt": "2024-11-29T02:13:05.718Z"
+  },
+  {
+    "id": 17328473764319212,
+    "targetId": 3,
+    "oldStatus": "Cold",
+    "newStatus": null,
+    "changedAt": "2024-11-29T02:29:36.431Z",
+    "action": "status"
   }
 ]

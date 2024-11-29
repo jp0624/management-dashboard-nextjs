@@ -1,10 +1,10 @@
 import React from 'react'
 import {
 	FaChartBar,
-	FaChartLine,
 	FaChartPie,
-	FaDigitalOcean,
 	FaTable,
+	// FaDigitalOcean,
+	// FaChartLine,
 } from 'react-icons/fa'
 
 interface ChartFiltersProps {
