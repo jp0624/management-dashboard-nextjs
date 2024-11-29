@@ -18,13 +18,15 @@ import TargetUtils from '@/app/components/utils/TargetUtils'
 
 import { TargetData } from '@/app/types'
 import LineChart from '../components/charts/LineChart'
+import { FaCloudversify } from 'react-icons/fa'
 
 const DashboardPage = () => {
 	const [activeComponents, setActiveComponents] = useState<string[]>([
 		'barChart',
 		'pieChart',
-		'donutChart',
 		'targetTable',
+		// 'donutChart',
+		// 'lineChart',
 	])
 
 	const {
@@ -70,6 +72,7 @@ const DashboardPage = () => {
 				? current.filter((c) => c !== component)
 				: [...current, component]
 		)
+		console.log('ACTIVE COMPONENTS: ', activeComponents)
 	}
 
 	const handleAddTargetClick = () => {
@@ -106,6 +109,9 @@ const DashboardPage = () => {
 			<header className='lg:h-1/6 flex flex-col lg:flex-row items-center justify-between py-5 shadow-sm w-full border-b border-b-blue-500 bg-white backdrop-blur-sm bg-opacity-15 text-white'>
 				<div className='flex flex-col flex-grow w-full'>
 					<h1 className='text-lg lg:text-3xl font-bold w-full mb-0 text-center'>
+						{/* <span className='flex items-center display-inline'>
+							<FaCloudversify />
+						</span> */}
 						Target Management Dashboard
 					</h1>
 					<DataFilter
@@ -114,7 +120,7 @@ const DashboardPage = () => {
 						toggleStatus={toggleStatus}
 					/>
 				</div>
-				<div className='flex flex-col flex-1 w-full gap-5 lg:px-10 lg:py-5 px-2 py-2 lg:justify-center'>
+				<div className='flex flex-col flex-1 w-full gap-2 lg:px-10 lg:py-5 px-2 py-2 lg:justify-center'>
 					<TargetUtils
 						onAddTarget={handleAddTargetClick}
 						onViewHistory={handleViewHistoryClick}
@@ -133,22 +139,79 @@ const DashboardPage = () => {
 					<div className='animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500' />
 				</div>
 			) : (
-				<section className='lg:h-5/6 h-full flex flex-col w-full gap-5 lg:px-10 px-2 py-2 lg:flex-row lg:justify-center'>
-					{['barChart', 'pieChart', 'targetTable'].map(
+				<section className='lg:h-5/6 h-full min-h-[20rem] flex flex-col min-h-500px w-full gap-5 lg:px-10 px-2 py-2 lg:flex-row lg:justify-center'>
+					{activeComponents.includes('donutChart') ||
+					activeComponents.includes('barChart') ? (
+						<div className='bg-white backdrop-blur-sm border border-blue-500 shadow-sm shadow-black flex-col gap-5 justify-center w-full lg:w-1/3 flex flex-1 rounded p-4 bg-opacity-15'>
+							{/* {activeComponents.includes('donutChart') && ( */}
+							<DonutChart
+								targets={filteredTargets}
+								activeFilters={activeStatuses}
+								setActiveFilters={setActiveStatuses}
+							/>
+							{/* )}
+							{activeComponents.includes('barChart') && ( */}
+							<BarChart
+								targets={filteredTargets}
+								activeFilters={activeStatuses}
+								setActiveFilters={setActiveStatuses}
+							/>
+							{/* )} */}
+						</div>
+					) : null}
+					{activeComponents.includes('lineChart') ||
+					activeComponents.includes('pieChart') ? (
+						<div className='bg-white backdrop-blur-sm border border-blue-500 shadow-sm shadow-black flex-col gap-5 justify-center w-full lg:w-1/3 flex flex-1 rounded p-4 bg-opacity-15'>
+							{/* {activeComponents.includes('lineChart') && ( */}
+							<LineChart
+								targets={filteredTargets}
+								activeFilters={activeStatuses}
+								setActiveFilters={setActiveStatuses}
+							/>
+							{/* )}
+							{activeComponents.includes('pieChart') && ( */}
+							<PieChart
+								targets={filteredTargets}
+								activeFilters={activeStatuses}
+								setActiveFilters={setActiveStatuses}
+							/>
+							{/* )} */}
+						</div>
+					) : null}
+					{activeComponents.includes('targetTable') ? (
+						<div className='scrollbar-targets overflow-y-auto py-0 flex-col gap-5 w-full lg:w-1/3 flex flex-1 rounded p-4'>
+							<TargetTable
+								targets={filteredTargets}
+								activeStatuses={activeStatuses}
+								editingTargetId={editingTargetId}
+								setEditingTargetId={setEditingTargetId}
+								newPipelineStatus={newPipelineStatus}
+								setNewPipelineStatus={setNewPipelineStatus}
+								pipelineStatusOptions={pipelineStatusOptions}
+								handleEditTarget={(target) => {
+									setEditingTargetId(target.id)
+									setNewPipelineStatus(target.pipelineStatus || 'Not Set')
+								}}
+								deleteTarget={handleDeleteTarget}
+								savePipelineStatus={savePipelineStatus}
+							/>
+						</div>
+					) : null}
+					{/* {['barChart', 'pieChart', 'donutChart', 'targetTable'].map(
 						(component) =>
 							activeComponents.includes(component) && (
 								<div
 									key={component}
 									className={`${
 										component === 'targetTable'
-											? 'scrollbar-targets overflow-y-auto'
+											? 'scrollbar-targets overflow-y-auto py-0'
 											: 'items-center'
 									} ${
-										(component === 'pieChart' || component === 'barChart') &&
-										'flex-col gap-5 justify-center'
-									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col rounded border border-blue-500 shadow-sm shadow-black p-4 bg-white backdrop-blur-sm bg-opacity-15`}
+										(component === 'pieChart' || component === 'donutChart') &&
+										'bg-white backdrop-blur-sm border border-blue-500 shadow-sm shadow-black flex-col gap-5 justify-center'
+									}  w-full lg:w-1/3 flex flex-1 gap-5 flex-col rounded p-4 bg-opacity-15`}
 								>
-									{component === 'barChart' ? (
+									{component === 'donutChart' ? (
 										<>
 											<DonutChart
 												targets={filteredTargets}
@@ -193,7 +256,7 @@ const DashboardPage = () => {
 									) : null}
 								</div>
 							)
-					)}
+					)} */}
 				</section>
 			)}
 

@@ -28,7 +28,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 					<>
 						<div
 							key={target.id}
-							className='border border-gray-300 p-4 rounded shadow-btm-mid flex flex-col bg-white'
+							className='border border-gray-300 p-3 rounded shadow-btm-mid flex flex-col bg-white'
 						>
 							<div className='flex flex-row justify-between items-center mb-2'>
 								<h3 className='text-lg font-bold'>{target.name}</h3>
@@ -40,7 +40,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 								</button>
 							</div>
 							<p className='text-gray-500'>{target.description}</p>
-							<div className='mt-1'>
+							<div className='mt-1 flex flex-row'>
 								<strong className='inline-block py-1'>Pipeline Status:</strong>{' '}
 								{editingTargetId === target.id ? (
 									<select
@@ -48,7 +48,7 @@ const TargetTable: React.FC<TargetTableProps> = ({
 										onChange={(e) =>
 											setNewPipelineStatus(e.target.value || null)
 										}
-										className='border border-gray-300 px-2 py-1 rounded text-slate-900'
+										className='border border-gray-300 mx-2 px-2 py-1 rounded text-slate-900'
 									>
 										{!pipelineStatusOptions.includes('Not Set') && (
 											<option value=''>Not Set</option>
@@ -60,57 +60,60 @@ const TargetTable: React.FC<TargetTableProps> = ({
 										))}
 									</select>
 								) : target.pipelineStatus === null ? (
-									'Not Set'
+									<span className='px-2 mx-2 rounded border-2 flex justify-center items-center'>
+										Not Set
+									</span>
 								) : (
 									<>
 										{}
 										<span
 											style={{
-												backgroundColor: `rgba(${
-													activeStatuses.indexOf(target.pipelineStatus) * 60
-												}, ${
-													activeStatuses.indexOf(target.pipelineStatus) * 40
-												}, ${150}, 0.25)`,
-												borderColor: `rgba(${
-													activeStatuses.indexOf(target.pipelineStatus) * 60
-												}, ${
-													activeStatuses.indexOf(target.pipelineStatus) * 40
-												}, ${150}, 0.75)`,
+												backgroundColor: `rgba(90, 120, 246, ${
+													(1 + activeStatuses.indexOf(target.pipelineStatus)) *
+													0.15
+												}`,
+												borderColor: `rgba(90, 120, 246, ${
+													(1 +
+														(activeStatuses.length -
+															activeStatuses.indexOf(target.pipelineStatus))) *
+													0.05
+												}`,
 											}}
-											className='px-2 py-1 rounded border-2'
+											className='px-2 mx-2 rounded border-2 flex justify-center items-center'
 										>
 											{target.pipelineStatus}
 										</span>
 									</>
 								)}
+								<div className='flex space-x-2'>
+									{editingTargetId === target.id ? (
+										<>
+											<button
+												onClick={() => setEditingTargetId(null)}
+												className='bg-slate-500 text-white px-2 py-1 rounded'
+											>
+												Cancel
+											</button>
+											<button
+												onClick={() => handleSaveClick(target.id)}
+												className='bg-green-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
+											>
+												<FaSave /> Save
+											</button>
+										</>
+									) : (
+										<button
+											onClick={() => handleEditTarget(target)}
+											className='bg-slate-900 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
+										>
+											<FaEdit /> Edit
+										</button>
+									)}
+								</div>
 							</div>
 							<div className='mt-1'>
-								<strong>Markets:</strong> {target.markets.join(', ')}
-							</div>
-							<div className='mt-4 flex space-x-2'>
-								{editingTargetId === target.id ? (
-									<>
-										<button
-											onClick={() => setEditingTargetId(null)}
-											className='bg-slate-600 text-white px-2 py-1 rounded'
-										>
-											Cancel
-										</button>
-										<button
-											onClick={() => handleSaveClick(target.id)}
-											className='bg-green-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
-										>
-											<FaSave /> Save
-										</button>
-									</>
-								) : (
-									<button
-										onClick={() => handleEditTarget(target)}
-										className='bg-blue-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
-									>
-										<FaEdit /> Edit
-									</button>
-								)}
+								<strong>Markets:</strong>{' '}
+								<span className='text-sm'>{target.markets.join(', ')}</span>
 							</div>
 						</div>
 					</>

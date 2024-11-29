@@ -41,6 +41,9 @@ const LineChart = ({ targets, activeFilters }: any) => {
 					text: 'Status',
 					color: '#ffffff', // X-axis title color
 				},
+				grid: {
+					color: 'rgba(255, 255, 255, 0.25)', // Grid lines color
+				},
 				ticks: {
 					color: '#ffffff', // X-axis labels color
 				},
@@ -51,6 +54,9 @@ const LineChart = ({ targets, activeFilters }: any) => {
 					display: true,
 					text: 'Count',
 					color: '#ffffff', // Y-axis title color
+				},
+				grid: {
+					color: 'rgba(255, 255, 255, 0.25)', // Grid lines color
 				},
 				ticks: {
 					color: '#ffffff', // Y-axis labels color
@@ -73,7 +79,7 @@ const LineChart = ({ targets, activeFilters }: any) => {
 	}
 
 	return (
-		<div className='flex w-full items-center'>
+		<div className='flex flex-1 w-full items-center'>
 			<Line height={300} width={300} data={data} options={options} />
 		</div>
 	)

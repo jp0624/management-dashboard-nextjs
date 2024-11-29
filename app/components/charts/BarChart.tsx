@@ -22,10 +22,12 @@ const BarChart = ({ targets, activeFilters }: any) => {
 					).length
 				}),
 				backgroundColor: activeFilters.map(
-					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.15})`
+					(_: any, index: number) =>
+						`rgba(255,255,255, ${(1 + (activeFilters.length - index)) * 0.15})`
 				),
 				borderColor: activeFilters.map(
-					(_: any, index: number) => `rgba(255,255,255, ${(1 + index) * 0.25})`
+					(_: any, index: number) =>
+						`rgba(255,255,255, ${(1 + (activeFilters.length - index)) * 0.25})`
 				),
 				borderWidth: 3,
 			},
@@ -42,6 +44,9 @@ const BarChart = ({ targets, activeFilters }: any) => {
 					text: 'Status',
 					color: '#ffffff', // X-axis title color
 				},
+				grid: {
+					color: 'rgba(255, 255, 255, 0.25)', // Grid lines color
+				},
 				ticks: {
 					color: '#ffffff', // X-axis labels color
 				},
@@ -52,6 +57,9 @@ const BarChart = ({ targets, activeFilters }: any) => {
 					display: true,
 					text: 'Count',
 					color: '#ffffff', // Y-axis title color
+				},
+				grid: {
+					color: 'rgba(255, 255, 255, 0.25)', // Grid lines color
 				},
 				ticks: {
 					color: '#ffffff', // Y-axis labels color
@@ -74,8 +82,8 @@ const BarChart = ({ targets, activeFilters }: any) => {
 	}
 
 	return (
-		<div className='flex w-full items-center'>
-			<Bar height={300} width={300} data={data} options={options} />
+		<div className='flex flex-1 w-full items-center'>
+			<Bar height={200} width={200} data={data} options={options} />
 		</div>
 	)
 }

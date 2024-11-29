@@ -15,7 +15,7 @@
     "id": 2,
     "name": "GreenLeaf Renewables",
     "description": "Sustainable energy company focusing on solar and wind power solutions.",
-    "pipelineStatus": "Active",
+    "pipelineStatus": null,
     "markets": [
       "Energy",
       "Sustainability",
@@ -27,7 +27,7 @@
     "id": 3,
     "name": "HealthPlus Innovations",
     "description": "Healthcare technology company developing wearable devices for remote patient monitoring.",
-    "pipelineStatus": "Passed",
+    "pipelineStatus": "Cold",
     "markets": [
       "Healthcare",
       "Wearable Technology",
@@ -58,18 +58,6 @@
       "EdTech"
     ],
     "lastUpdated": "2023-04-11T11:00:00Z"
-  },
-  {
-    "id": 6,
-    "name": "LogiSmart Solutions",
-    "description": "Supply chain optimization company using IoT and blockchain technologies.",
-    "pipelineStatus": "Hot",
-    "markets": [
-      "Logistics",
-      "Supply Chain",
-      "Blockchain"
-    ],
-    "lastUpdated": "2023-04-10T17:30:00Z"
   },
   {
     "id": 7,
@@ -247,7 +235,7 @@
     "id": 22,
     "name": "AquaCulture Innovations",
     "description": "Sustainable aquaculture company using AI for optimized fish farming.",
-    "pipelineStatus": "Active",
+    "pipelineStatus": "Passed",
     "markets": [
       "Aquaculture",
       "Artificial Intelligence",

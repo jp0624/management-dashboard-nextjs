@@ -1,5 +1,11 @@
 import React from 'react'
-import { FaChartBar, FaChartPie, FaDigitalOcean, FaTable } from 'react-icons/fa'
+import {
+	FaChartBar,
+	FaChartLine,
+	FaChartPie,
+	FaDigitalOcean,
+	FaTable,
+} from 'react-icons/fa'
 
 interface ChartFiltersProps {
 	activeComponents: string[]
@@ -14,7 +20,8 @@ const ChartFilter: React.FC<ChartFiltersProps> = ({
 		{ label: 'Bar Chart', value: 'barChart', icon: 'FaChartBar' },
 		{ label: 'Pie Chart', value: 'pieChart', icon: 'FaChartPie' },
 		{ label: 'Target Table', value: 'targetTable', icon: 'FaTable' },
-		{ label: 'Domnut Chart', value: 'donutChart', icon: 'FaDigitalOcean' },
+		// { label: 'Donut Chart', value: 'donutChart', icon: 'FaDigitalOcean' },
+		// { label: 'Line Chart', value: 'lineChart', icon: 'FaChartLine' },
 	]
 
 	return (
@@ -25,16 +32,17 @@ const ChartFilter: React.FC<ChartFiltersProps> = ({
 					onClick={() => toggleActiveComponent(filter.value)}
 					className={`px-4 py-2 rounded ${
 						activeComponents.includes(filter.value)
-							? 'bg-blue-500 text-white'
-							: 'bg-gray-300 text-gray-800 hover:bg-gray-400'
+							? 'bg-slate-900 text-white'
+							: 'bg-gray-300 text-gray-400 hover:bg-gray-200'
 					}`}
 				>
 					{
 						<>
 							{filter.icon === 'FaChartBar' && <FaChartBar />}
 							{filter.icon === 'FaTable' && <FaTable />}
-							{filter.icon === 'FaDigitalOcean' && <FaDigitalOcean />}
 							{filter.icon === 'FaChartPie' && <FaChartPie />}
+							{/* {filter.icon === 'FaDigitalOcean' && <FaDigitalOcean />}
+							{filter.icon === 'FaChartLine' && <FaChartLine />} */}
 						</>
 					}
 				</button>
