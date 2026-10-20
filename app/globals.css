@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  body { @apply bg-slate-50 font-sans text-slate-900 antialiased; }
+  body { @apply bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 antialiased; }
   button, a, input, select, textarea { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2; }
   button { @apply transition-colors disabled:cursor-not-allowed disabled:opacity-40; }
-  input, select, textarea { @apply min-w-0; }
+  input, select, textarea { @apply min-w-0 bg-white dark:bg-slate-900; }
 }

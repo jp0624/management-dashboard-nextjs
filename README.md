@@ -60,6 +60,12 @@ For a shared deployment, add authenticated server mutations backed by a durable 
 
 Unsupported mutation methods return 405. These endpoints intentionally expose seed data; they do not reflect a visitor's private browser workspace. UI mutations use the validated workspace reducer in `app/lib/workspace.ts`.
 
+## Theme and artwork
+
+The header includes an accessible **Dark mode** switch. It follows the system preference until a choice is saved in `target-management.theme`; saved choices survive reloads and synchronize between tabs. A pre-paint script avoids an incorrect initial theme flash. Tailwind dark variants cover the workspace, forms, status badges, and dialogs; Chart.js adapts its labels, grids, and borders.
+
+Two generated WebP images are integrated: `public/images/pipeline-network.webp` in the intro and `public/images/opportunity-scanner.webp` in the empty search state. They are decorative conceptual images, not data visualizations. See `public/images/README.md` for generation prompts.
+
 ## Styling
 
 Tailwind is compiled through PostCSS, scanning `app/**/*.{js,ts,jsx,tsx,mdx}`. Responsive grid, spacing, typography, colours, focus states, cards, forms, dialogs, and chart containers use utility classes directly in TSX. `app/globals.css` only includes Tailwind directives and common base rules. There is no Tailwind CDN and no runtime-generated utility class names. Chart drawing colours remain in Chart.js configuration.

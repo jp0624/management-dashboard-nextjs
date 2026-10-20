@@ -39,3 +39,7 @@ Desktop and mobile screenshots were inspected. Live Vercel verification is separ
 Existing Vercel project: `management-dashboard-nextjs` in `jp0624s-projects`.
 
 The connected Vercel account can list the project but returns HTTP 403 when reading its team-scoped configuration. Local CLI credentials are not available. GitHub changes can be pushed; live deployment status must be checked through GitHub deployment checks or after reconnecting Vercel with access to that team. Do not treat a successful local build as confirmation of a live deployment.
+
+## Dark mode and artwork update
+
+Added a persisted light/dark switch, system-preference initialization, cross-tab preference updates, dark form/dialog/card variants, and theme-aware Chart.js colours. Added two original technical illustrations as optimized WebP assets (about 130 KB combined). Production build and browser checks passed: saved preference after reload, OS dark default, keyboard activation, dark body/dialog colours, all five responsive widths, image loading, and no browser runtime errors.
