@@ -1,134 +1,60 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
+import { useEffect, useRef, useState } from 'react'
+import seedTargets from '@/public/data/targets.json'
+import seedHistory from '@/public/data/targets-history.json'
+import type { StatusChangeHistory } from '@/app/types'
+import { changeWorkspace, isWorkspace, STATUSES, STORAGE_KEY, type Workspace, type WorkspaceAction, type TargetInput } from '@/app/lib/workspace'
 
-import { useEffect, useState } from 'react'
-import { API_PATH, TARGETS_FOLDER } from '@/app/constants/paths'
-import { TargetData } from '@/app/types'
+const seed: Workspace = { version: 1, targets: seedTargets, history: (seedHistory as StatusChangeHistory[]).slice().sort((a, b) => Date.parse(b.changedAt) - Date.parse(a.changedAt)) }
 
-const useTargets = () => {
-	const [dataLoading, setDataLoading] = useState<boolean>(true)
-	const [targets, setTargets] = useState<TargetData[]>([])
-	const [error, setError] = useState<string | null>(null)
-	const [editingTargetId, setEditingTargetId] = useState<number | null>(null)
-	const [newPipelineStatus, setNewPipelineStatus] = useState<string | null>(
-		null
-	)
-	const [activeStatuses, setActiveStatuses] = useState<string[]>([])
-	const [pipelineStatusOptions, setPipelineStatusOptions] = useState<string[]>(
-		[]
-	)
-
-	useEffect(() => {
-		const fetchTargets = async () => {
-			try {
-				const response = await fetch(`${API_PATH}${TARGETS_FOLDER}`, {
-					method: 'GET',
-					headers: { 'Content-Type': 'application/json' },
-				})
-				if (!response.ok) throw new Error('Failed to fetch targets')
-				const data: TargetData[] = await response.json()
-				setTargets(data)
-
-				const statuses = Array.from(
-					new Set(
-						data.map((target) =>
-							target.pipelineStatus === null ? 'Not Set' : target.pipelineStatus
-						)
-					)
-				)
-
-				setPipelineStatusOptions(statuses)
-				setActiveStatuses(statuses)
-			} catch (error: any) {
-				console.error('Error fetching targets:', error)
-				setError(error.message || 'An unknown error occurred')
-			} finally {
-				setDataLoading(false)
-			}
-		}
-
-		fetchTargets()
-	}, [])
-
-	const addNewTarget = async (newTarget: {
-		name: string
-		description: string
-		pipelineStatus: string | null
-		markets: string[]
-	}) => {
-		try {
-			const response = await fetch(`${API_PATH}${TARGETS_FOLDER}`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(newTarget),
-			})
-
-			if (!response.ok) throw new Error('Failed to add new target')
-			const createdTarget: TargetData = await response.json()
-			setTargets((prev) => [...prev, createdTarget])
-		} catch (error: any) {
-			console.error('Error adding new target:', error)
-			setError(error.message || 'An unknown error occurred')
-		}
-	}
-
-	const savePipelineStatus = async (id: number) => {
-		if (newPipelineStatus === null) return
-
-		try {
-			const response = await fetch(`${API_PATH}${TARGETS_FOLDER}/${id}`, {
-				method: 'PATCH',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					pipelineStatus:
-						newPipelineStatus === 'Not Set' ? null : newPipelineStatus,
-				}),
-			})
-
-			if (!response.ok) throw new Error('Failed to update pipeline status')
-
-			const updatedTarget = await response.json()
-			setTargets((prev) =>
-				prev.map((target) => (target.id === id ? updatedTarget : target))
-			)
-			setEditingTargetId(null)
-			setNewPipelineStatus(null)
-		} catch (error: any) {
-			console.error('Error updating pipeline status:', error)
-			setError(error.message || 'An unknown error occurred')
-		}
-	}
-
-	const deleteTarget = async (id: number) => {
-		try {
-			const response = await fetch(`${API_PATH}${TARGETS_FOLDER}/${id}`, {
-				method: 'DELETE',
-				headers: { 'Content-Type': 'application/json' },
-			})
-
-			if (!response.ok) throw new Error('Failed to delete target')
-
-			setTargets((prev) => prev.filter((target) => target.id !== id))
-		} catch (error: any) {
-			console.error('Error deleting target:', error)
-			setError(error.message || 'An unknown error occurred')
-		}
-	}
-
-	return {
-		dataLoading,
-		targets,
-		error,
-		editingTargetId,
-		newPipelineStatus,
-		pipelineStatusOptions,
-		activeStatuses,
-		setEditingTargetId,
-		setNewPipelineStatus,
-		setActiveStatuses,
-		addNewTarget,
-		savePipelineStatus,
-		deleteTarget,
-	}
+export default function useTargets() {
+  const [workspace, setWorkspace] = useState<Workspace>(seed)
+  const current = useRef(seed)
+  const [dataLoading, setDataLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [activeStatuses, setActiveStatuses] = useState<string[]>(STATUSES)
+  const [editingTargetId, setEditingTargetId] = useState<number | null>(null)
+  const [newPipelineStatus, setNewPipelineStatus] = useState<string | null>(null)
+  useEffect(() => {
+    const restore = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY)
+        const parsed: unknown = saved ? JSON.parse(saved) : seed
+        if (!isWorkspace(parsed)) throw new Error('Saved workspace is invalid. Export or clear this site’s saved data to recover.')
+        current.current = parsed
+        setWorkspace(parsed)
+        setError(null)
+      } catch (e) { setError(e instanceof Error ? e.message : 'Browser storage is unavailable.') }
+      setDataLoading(false)
+    }
+    restore()
+    const sync = (event: StorageEvent) => { if (event.key === STORAGE_KEY || event.key === null) restore() }
+    window.addEventListener('storage', sync)
+    return () => window.removeEventListener('storage', sync)
+  }, [])
+  const commit = (action: WorkspaceAction) => {
+    try {
+      // Read the latest snapshot before a write, including changes from another tab.
+      const saved = localStorage.getItem(STORAGE_KEY)
+      const latest: unknown = saved ? JSON.parse(saved) : current.current
+      if (!isWorkspace(latest)) throw new Error('Saved workspace is invalid; changes were not saved.')
+      const next = changeWorkspace(latest, action)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      current.current = next
+      setWorkspace(next)
+      setError(null)
+      return true
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not save. Check available browser storage.')
+      return false
+    }
+  }
+  const savePipelineStatus = (id: number) => {
+    if (commit({ type: 'status', id, status: newPipelineStatus })) setEditingTargetId(null)
+  }
+  return { targets: workspace.targets, history: workspace.history, dataLoading, error,
+    activeStatuses, setActiveStatuses, pipelineStatusOptions: STATUSES,
+    editingTargetId, setEditingTargetId, newPipelineStatus, setNewPipelineStatus,
+    addNewTarget: (target: TargetInput) => commit({ type: 'add', target }),
+    deleteTarget: (id: number) => commit({ type: 'delete', id }), savePipelineStatus }
 }
-
-export default useTargets

@@ -338,5 +338,671 @@
       "EdTech"
     ],
     "lastUpdated": "2023-03-17T14:05:00Z"
+  },
+  {
+    "id": 31,
+    "name": "Northstar Analytics",
+    "description": "Operational analytics for distributed teams.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-14T14:00:00Z"
+  },
+  {
+    "id": 32,
+    "name": "CedarCloud Systems",
+    "description": "Secure cloud infrastructure for growing businesses.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-15T14:00:00Z"
+  },
+  {
+    "id": 33,
+    "name": "Prism Data Works",
+    "description": "Data quality tooling for enterprise reporting.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-16T14:00:00Z"
+  },
+  {
+    "id": 34,
+    "name": "RelayStack Technologies",
+    "description": "Workflow automation for customer operations.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-17T14:00:00Z"
+  },
+  {
+    "id": 35,
+    "name": "BeaconOps Software",
+    "description": "Incident response and service monitoring software.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-18T14:00:00Z"
+  },
+  {
+    "id": 36,
+    "name": "MapleGrid Networks",
+    "description": "Managed networking for multi-site organizations.",
+    "pipelineStatus": null,
+    "markets": [
+      "Technology",
+      "Enterprise Software"
+    ],
+    "lastUpdated": "2026-10-01T14:00:00Z"
+  },
+  {
+    "id": 37,
+    "name": "Everwell Digital Health",
+    "description": "Remote care coordination for outpatient clinics.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-02T14:00:00Z"
+  },
+  {
+    "id": 38,
+    "name": "Orchard Care Systems",
+    "description": "Scheduling and intake tools for community care.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-03T14:00:00Z"
+  },
+  {
+    "id": 39,
+    "name": "ClearPath Diagnostics",
+    "description": "Diagnostic workflow software for laboratories.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-04T14:00:00Z"
+  },
+  {
+    "id": 40,
+    "name": "Summit Patient Services",
+    "description": "Patient engagement and follow-up platforms.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-05T14:00:00Z"
+  },
+  {
+    "id": 41,
+    "name": "Harbour Medical Software",
+    "description": "Practice management for specialist providers.",
+    "pipelineStatus": null,
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-06T14:00:00Z"
+  },
+  {
+    "id": 42,
+    "name": "VitalBridge Health",
+    "description": "Interoperable health records and care navigation.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Healthcare",
+      "Health Tech"
+    ],
+    "lastUpdated": "2026-10-07T14:00:00Z"
+  },
+  {
+    "id": 43,
+    "name": "LedgerSpring Finance",
+    "description": "Cash-flow planning for small businesses.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-08T14:00:00Z"
+  },
+  {
+    "id": 44,
+    "name": "Copperline Payments",
+    "description": "Payment reconciliation for online merchants.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-09T14:00:00Z"
+  },
+  {
+    "id": 45,
+    "name": "HarbourPoint Lending",
+    "description": "Loan origination tools for regional lenders.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-10T14:00:00Z"
+  },
+  {
+    "id": 46,
+    "name": "TrueNorth Risk",
+    "description": "Risk reporting for insurance and finance teams.",
+    "pipelineStatus": null,
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-11T14:00:00Z"
+  },
+  {
+    "id": 47,
+    "name": "Juniper Wealth Systems",
+    "description": "Portfolio reporting for independent advisors.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-12T14:00:00Z"
+  },
+  {
+    "id": 48,
+    "name": "Atlas Treasury",
+    "description": "Treasury operations for mid-market companies.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Financial Services",
+      "FinTech"
+    ],
+    "lastUpdated": "2026-10-13T14:00:00Z"
+  },
+  {
+    "id": 49,
+    "name": "Solstice Energy Labs",
+    "description": "Solar performance monitoring for commercial buildings.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-14T14:00:00Z"
+  },
+  {
+    "id": 50,
+    "name": "Canopy Carbon Systems",
+    "description": "Carbon accounting for manufacturing supply chains.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-15T14:00:00Z"
+  },
+  {
+    "id": 51,
+    "name": "BlueCurrent Power",
+    "description": "Energy management for electric vehicle charging.",
+    "pipelineStatus": null,
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-16T14:00:00Z"
+  },
+  {
+    "id": 52,
+    "name": "Evergreen Grid",
+    "description": "Grid forecasting and demand response software.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-17T14:00:00Z"
+  },
+  {
+    "id": 53,
+    "name": "TerraLoop Materials",
+    "description": "Circular materials tracking for industrial partners.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-18T14:00:00Z"
+  },
+  {
+    "id": 54,
+    "name": "Windward Storage",
+    "description": "Battery storage planning for renewable projects.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Energy",
+      "Sustainability",
+      "Clean Tech"
+    ],
+    "lastUpdated": "2026-10-01T14:00:00Z"
+  },
+  {
+    "id": 55,
+    "name": "Cartwell Commerce",
+    "description": "Inventory visibility for independent retailers.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-02T14:00:00Z"
+  },
+  {
+    "id": 56,
+    "name": "Birch Retail Systems",
+    "description": "Omnichannel order management for specialty stores.",
+    "pipelineStatus": null,
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-03T14:00:00Z"
+  },
+  {
+    "id": 57,
+    "name": "MarketNest Digital",
+    "description": "Merchant storefront tools for regional brands.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-04T14:00:00Z"
+  },
+  {
+    "id": 58,
+    "name": "Fieldstone Merchandising",
+    "description": "Product assortment planning for retail teams.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-05T14:00:00Z"
+  },
+  {
+    "id": 59,
+    "name": "Shelfwise Analytics",
+    "description": "Demand forecasting for consumer goods.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-06T14:00:00Z"
+  },
+  {
+    "id": 60,
+    "name": "Loom Customer Platforms",
+    "description": "Customer retention tools for subscription retailers.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Retail",
+      "E-commerce"
+    ],
+    "lastUpdated": "2026-10-07T14:00:00Z"
+  },
+  {
+    "id": 61,
+    "name": "RouteSpring Logistics",
+    "description": "Delivery route optimization for urban fleets.",
+    "pipelineStatus": null,
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-08T14:00:00Z"
+  },
+  {
+    "id": 62,
+    "name": "Freightline Intelligence",
+    "description": "Freight tracking and carrier performance reporting.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-09T14:00:00Z"
+  },
+  {
+    "id": 63,
+    "name": "Portside Fulfilment",
+    "description": "Warehouse operations for growing online brands.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-10T14:00:00Z"
+  },
+  {
+    "id": 64,
+    "name": "TransitPeak Systems",
+    "description": "Dispatch and fleet scheduling for regional operators.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-11T14:00:00Z"
+  },
+  {
+    "id": 65,
+    "name": "CargoNest Planning",
+    "description": "Shipment planning for import and export teams.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-12T14:00:00Z"
+  },
+  {
+    "id": 66,
+    "name": "Wayfinder Distribution",
+    "description": "Distribution network analytics for wholesalers.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Logistics",
+      "Supply Chain"
+    ],
+    "lastUpdated": "2026-10-13T14:00:00Z"
+  },
+  {
+    "id": 67,
+    "name": "BrightPath Learning",
+    "description": "Adaptive learning resources for school districts.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-14T14:00:00Z"
+  },
+  {
+    "id": 68,
+    "name": "Cedar Academy Tools",
+    "description": "Assessment and feedback software for educators.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-15T14:00:00Z"
+  },
+  {
+    "id": 69,
+    "name": "SkillHarbour Labs",
+    "description": "Skills development platforms for employers.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-16T14:00:00Z"
+  },
+  {
+    "id": 70,
+    "name": "Classroom Compass",
+    "description": "Classroom planning and parent communication.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-17T14:00:00Z"
+  },
+  {
+    "id": 71,
+    "name": "Meridian Training",
+    "description": "Compliance training for regulated industries.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-18T14:00:00Z"
+  },
+  {
+    "id": 72,
+    "name": "Learnwell Access",
+    "description": "Accessible learning content for adult education.",
+    "pipelineStatus": null,
+    "markets": [
+      "Education",
+      "EdTech"
+    ],
+    "lastUpdated": "2026-10-01T14:00:00Z"
+  },
+  {
+    "id": 73,
+    "name": "UrbanLeaf Properties",
+    "description": "Property operations for mixed-use communities.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-02T14:00:00Z"
+  },
+  {
+    "id": 74,
+    "name": "Keyline Property Systems",
+    "description": "Leasing workflow tools for commercial portfolios.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-03T14:00:00Z"
+  },
+  {
+    "id": 75,
+    "name": "NestPoint Operations",
+    "description": "Resident services for rental housing teams.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-04T14:00:00Z"
+  },
+  {
+    "id": 76,
+    "name": "Brickwell Analytics",
+    "description": "Real estate market analysis for investment teams.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-05T14:00:00Z"
+  },
+  {
+    "id": 77,
+    "name": "Homefield Digital",
+    "description": "Maintenance coordination for property managers.",
+    "pipelineStatus": null,
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-06T14:00:00Z"
+  },
+  {
+    "id": 78,
+    "name": "CivicSpace Planning",
+    "description": "Development planning tools for urban projects.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Real Estate",
+      "PropTech"
+    ],
+    "lastUpdated": "2026-10-07T14:00:00Z"
+  },
+  {
+    "id": 79,
+    "name": "ForgeLight Automation",
+    "description": "Production monitoring for advanced manufacturing.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-08T14:00:00Z"
+  },
+  {
+    "id": 80,
+    "name": "SteelRiver Sensors",
+    "description": "Connected sensors for predictive maintenance.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-09T14:00:00Z"
+  },
+  {
+    "id": 81,
+    "name": "Millstone Robotics",
+    "description": "Robotics integration for warehouse operations.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-10T14:00:00Z"
+  },
+  {
+    "id": 82,
+    "name": "FoundryEdge Systems",
+    "description": "Quality assurance software for industrial suppliers.",
+    "pipelineStatus": null,
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-11T14:00:00Z"
+  },
+  {
+    "id": 83,
+    "name": "Precision Grove",
+    "description": "Production scheduling for precision workshops.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-12T14:00:00Z"
+  },
+  {
+    "id": 84,
+    "name": "AxisWorks Industrial",
+    "description": "Equipment performance analytics for factory teams.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Manufacturing",
+      "Industrial IoT"
+    ],
+    "lastUpdated": "2026-10-13T14:00:00Z"
+  },
+  {
+    "id": 85,
+    "name": "Storyline Studio Tools",
+    "description": "Content production workflows for creative studios.",
+    "pipelineStatus": "Closed",
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-14T14:00:00Z"
+  },
+  {
+    "id": 86,
+    "name": "SignalNest Media",
+    "description": "Audience measurement for independent publishers.",
+    "pipelineStatus": "Passed",
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-15T14:00:00Z"
+  },
+  {
+    "id": 87,
+    "name": "CanvasPoint Marketing",
+    "description": "Campaign planning for distributed marketing teams.",
+    "pipelineStatus": null,
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-16T14:00:00Z"
+  },
+  {
+    "id": 88,
+    "name": "AudienceWorks Digital",
+    "description": "Subscriber engagement tools for media brands.",
+    "pipelineStatus": "Cold",
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-17T14:00:00Z"
+  },
+  {
+    "id": 89,
+    "name": "FrameShift Platforms",
+    "description": "Video asset management for production teams.",
+    "pipelineStatus": "Active",
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-18T14:00:00Z"
+  },
+  {
+    "id": 90,
+    "name": "EchoTrail Insights",
+    "description": "Marketing attribution for multichannel campaigns.",
+    "pipelineStatus": "Hot",
+    "markets": [
+      "Media",
+      "Marketing Technology"
+    ],
+    "lastUpdated": "2026-10-01T14:00:00Z"
   }
 ]

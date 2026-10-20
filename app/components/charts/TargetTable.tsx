@@ -1,126 +1,14 @@
-import React from 'react'
-import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa'
-import { TargetTableProps } from '@/app/types'
-
-const TargetTable: React.FC<TargetTableProps> = ({
-	targets,
-	editingTargetId,
-	newPipelineStatus,
-	setEditingTargetId,
-	setNewPipelineStatus,
-	savePipelineStatus,
-	deleteTarget,
-	pipelineStatusOptions,
-	handleEditTarget,
-	activeStatuses,
-}) => {
-	const handleSaveClick = (id: number) => {
-		savePipelineStatus(id)
-	}
-
-	return (
-		<>
-			<div className='flex flex-col gap-5 w-full'>
-				{targets.length === 0 && (
-					<p className='w-full text-center'>No matching targets found.</p>
-				)}
-				{targets.map((target) => (
-					<>
-						<div
-							key={target.id}
-							className='border border-gray-300 p-3 rounded shadow-btm-mid flex flex-col bg-white'
-						>
-							<div className='flex flex-row justify-between items-center mb-2'>
-								<h3 className='text-lg font-bold'>{target.name}</h3>
-								<button
-									onClick={() => deleteTarget(target.id)} // Ensure target.id is passed as a number
-									className=' text-red-500 text-2xl rounded-full flex items-center justify-center flex-row gap-2'
-								>
-									<FaTimesCircle />
-								</button>
-							</div>
-							<p className='text-gray-500'>{target.description}</p>
-							<div className='mt-1 flex flex-row'>
-								<strong className='inline-block py-1'>Pipeline Status:</strong>{' '}
-								{editingTargetId === target.id ? (
-									<select
-										value={newPipelineStatus || ''}
-										onChange={(e) =>
-											setNewPipelineStatus(e.target.value || null)
-										}
-										className='border border-gray-300 mx-2 px-2 py-1 rounded text-slate-900'
-									>
-										{!pipelineStatusOptions.includes('Not Set') && (
-											<option value=''>Not Set</option>
-										)}
-										{pipelineStatusOptions.map((status) => (
-											<option key={status} value={status}>
-												{status}
-											</option>
-										))}
-									</select>
-								) : target.pipelineStatus === null ? (
-									<span className='px-2 mx-2 rounded border-2 flex justify-center items-center'>
-										Not Set
-									</span>
-								) : (
-									<>
-										{}
-										<span
-											style={{
-												backgroundColor: `rgba(90, 120, 246, ${
-													(1 + activeStatuses.indexOf(target.pipelineStatus)) *
-													0.15
-												}`,
-												borderColor: `rgba(90, 120, 246, ${
-													(1 +
-														(activeStatuses.length -
-															activeStatuses.indexOf(target.pipelineStatus))) *
-													0.05
-												}`,
-											}}
-											className='px-2 mx-2 rounded border-2 flex justify-center items-center'
-										>
-											{target.pipelineStatus}
-										</span>
-									</>
-								)}
-								<div className='flex space-x-2'>
-									{editingTargetId === target.id ? (
-										<>
-											<button
-												onClick={() => setEditingTargetId(null)}
-												className='bg-slate-500 text-white px-2 py-1 rounded'
-											>
-												Cancel
-											</button>
-											<button
-												onClick={() => handleSaveClick(target.id)}
-												className='bg-green-500 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
-											>
-												<FaSave /> Save
-											</button>
-										</>
-									) : (
-										<button
-											onClick={() => handleEditTarget(target)}
-											className='bg-slate-900 text-white px-2 py-1 rounded flex items-center justify-center flex-row gap-2'
-										>
-											<FaEdit /> Edit
-										</button>
-									)}
-								</div>
-							</div>
-							<div className='mt-1'>
-								<strong>Markets:</strong>{' '}
-								<span className='text-sm'>{target.markets.join(', ')}</span>
-							</div>
-						</div>
-					</>
-				))}
-			</div>
-		</>
-	)
+import type { TargetTableProps } from '@/app/types'
+const badges: Record<string, string> = {
+  'Not Set': 'bg-slate-100 text-slate-600', Cold: 'bg-blue-50 text-blue-700', Active: 'bg-indigo-50 text-indigo-700',
+  Hot: 'bg-amber-50 text-amber-800', Closed: 'bg-emerald-50 text-emerald-700', Passed: 'bg-rose-50 text-rose-700',
 }
-
-export default TargetTable
+export default function TargetTable({ targets, editingTargetId, newPipelineStatus, setEditingTargetId, setNewPipelineStatus, savePipelineStatus, deleteTarget, pipelineStatusOptions, handleEditTarget }: TargetTableProps) {
+  return <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{targets.map(target => <article key={target.id} className="flex min-w-0 flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="flex items-start justify-between gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-sm font-bold text-indigo-700" aria-hidden="true">{target.name.split(' ').slice(0, 2).map(s => s[0]).join('')}</div><span className={`rounded-full px-3 py-1 text-xs font-semibold ${badges[target.pipelineStatus ?? 'Not Set']}`}>{target.pipelineStatus ?? 'Not Set'}</span></div>
+    <h3 className="mt-4 break-words text-base font-semibold tracking-tight">{target.name}</h3><p className="mt-2 flex-1 break-words text-sm leading-6 text-slate-500">{target.description}</p>
+    <div className="mt-4 flex flex-wrap gap-1.5">{target.markets.map(m => <span key={m} className="max-w-full break-words rounded-md bg-slate-50 px-2 py-1 text-xs text-slate-600 ring-1 ring-inset ring-slate-200">{m}</span>)}</div>
+    {editingTargetId === target.id ? <div className="mt-5 border-t border-slate-100 pt-4"><label className="block text-xs font-medium">Pipeline status<select aria-label={`Status for ${target.name}`} value={newPipelineStatus ?? 'Not Set'} onChange={e => setNewPipelineStatus(e.target.value)} className="mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm">{pipelineStatusOptions.map(s => <option key={s}>{s}</option>)}</select></label><div className="mt-3 flex gap-2"><button onClick={() => savePipelineStatus(target.id)} className="min-h-11 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-700">Save</button><button onClick={() => setEditingTargetId(null)} className="min-h-11 rounded-lg px-4 text-sm text-slate-600 hover:bg-slate-100">Cancel</button></div></div>
+    : <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-3"><button onClick={() => handleEditTarget(target)} className="min-h-11 rounded-lg px-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50">Edit status <span aria-hidden="true">↗</span></button><button onClick={() => deleteTarget(target.id)} aria-label={`Delete ${target.name}`} className="min-h-11 rounded-lg px-2 text-sm text-slate-500 hover:bg-rose-50 hover:text-rose-700">Delete</button></div>}
+  </article>)}</div>
+}

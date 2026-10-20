@@ -8,7 +8,7 @@ Chart.register(...registerables)
 const DonutChart = ({ targets, activeFilters }: any) => {
 	// Prepare data for the chart
 	const data = {
-		labels: activeFilters.sort(), // Use active filters as labels
+		labels: [...activeFilters].sort(), // Use active filters as labels
 		datasets: [
 			{
 				label: 'Count', // Single dataset for counts
@@ -83,3 +83,4 @@ const DonutChart = ({ targets, activeFilters }: any) => {
 }
 
 export default DonutChart
+

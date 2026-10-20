@@ -1,196 +1,77 @@
-# Management Dashboard Nextjs
+# Target Management
 
-## Docker + Next.js + Tailwind + chart.js
+A responsive opportunity pipeline demo built with Next.js, React, TypeScript, Tailwind CSS, and Chart.js.
 
-### Setup using Docker
+## Run locally
 
-- make sure you have Docker installed on your machine
-- navigate to where you'd like to install the app and clone the repository by running:
+Use Node.js 22 and npm:
 
-```
-git clone https://github.com/jp0624/management-dashboard-nextjs.git
-```
-
-- next open that directory and build with docker:
-
-```
-docker-compose up --build
-```
-
-- The first build downloads dependencies.
-- You will then be able to access the app at: http://localhost:3000
-
-#### Note:
-
-After first build you can simply run:
-
-```
-docker-compose up
-```
-
-To end the docker instance run:
-
-```
-docker-compose down
-```
-
-### Setup using Next.JS directly
-
-- make sure you have Node v.22 installed on your machine
-- navigate to where you'd like to install the app and clone the repository by running:
-
-```
-git clone https://github.com/jp0624/management-dashboard-nextjs.git
-```
-
-- next open that directory and build with npm:
-
-```
-npm install
-```
-
-- Installation downloads dependencies.
-- then launch the app:
-
-```
+```sh
+npm ci
 npm run dev
 ```
 
-- You will then be able to access the app at: http://localhost:3000
+Open http://localhost:3000. The root redirects to `/dashboard`.
 
-`
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
 
-# Project Notes & Future Considerations
+Docker remains supported with `docker-compose up --build`.
 
-## Overview & Features
+## Deploy to Vercel
 
-### General
+Import `jp0624/management-dashboard-nextjs` with the **Next.js** preset and repository root as the Root Directory. Use Node.js **22.x**. The committed `vercel.json` sets `npm ci` and `npm run build`; leave Output Directory at its framework default. No environment variables, filesystem writes, database, or external image/font services are required for the demo. Pushes to the configured production branch trigger Vercel's Git integration.
 
-- Overall responsive UI layout throughout.
-- Tailwind used for centralized styling.
+The project uses Next.js 15.5.28 and an npm lockfile. The former Next.js 14.2.15 dependency and writable-JSON API implementation have been replaced.
 
-### Filters
+## Features
 
-- User can choose what Pipeline Statuses to display.
-- Both Chart and Target List are automatically updated.
-- User can enable all statuses by clicking `"all"` option.
+- 89 sample targets: the original 29 plus 60 companies across technology, healthcare, finance, energy, retail, logistics, education, property, manufacturing, and media.
+- 124 sample history events, with names preserved after target deletion.
+- Summary cards for total, active/hot, closed, and market coverage.
+- Search by name, description, or market; market dropdown; multi-select pipeline statuses; sort by company or status.
+- Bar, line, pie, and doughnut charts derived from the same filtered records. Line view compares categories; it is not a time series.
+- 12-item pagination, with responsive target cards, wrapping controls, and independently visible charts and targets.
+- Add targets with multiple markets, update statuses, and confirm deletion.
+- Searchable history with action filters and newest-first events.
+- JSON export of **all matching targets**, not just the current page. This export does not include history and is not an import/restore format.
+- Native dialogs with focus containment, Escape to close, focus restoration, accessible labels, visible focus, and touch-sized controls.
 
-### Chart
+## Persistence and scope
 
-- Bars are hidden when filters are toggled.
-- Hover displays the count of targets.
+This is an explicitly labelled **browser-local demo**, not a shared CRM. Initial data is bundled from `public/data/targets.json` and `public/data/targets-history.json`. After hydration, the app restores `target-management.workspace.v1` from localStorage. Every change saves targets and history in one versioned snapshot, then updates the UI. Invalid data, unavailable storage, or quota failures display errors without claiming a successful save. Reloads retain edits and other tabs receive storage updates.
 
-### Target List
+Data is scoped to the current browser and origin; preview and production URLs have separate workspaces. Clearing site data removes saved edits. No server database, authentication, cross-device syncing, or strict concurrent multi-tab transaction guarantee is provided. New tabs load the seed until the first change is saved. To restore the seeded demo, remove the `target-management.workspace.v1` key in browser storage; export anything you want to keep first.
 
-- Displays a list of all targets from `/public/data/targets.json`
-- User has ability to delete a target with a confirmation modal
-- User can edit the pipeline status by clicking edit and saving for each target
+For a shared deployment, add authenticated server mutations backed by a durable database and transactional history writes. Do not restore writes to bundled files or use `/tmp` or in-memory state as persistent storage on Vercel.
 
-### Add New Target
+## Read-only seed API
 
-- New target modal allows user to create a new target
-- User can add multiple markets by click the [+] button
+| Endpoint | Behaviour |
+| --- | --- |
+| `GET /api/targets` | All bundled sample targets |
+| `GET /api/targets/:id` | One sample target, or 404 |
+| `GET /api/history` | Bundled sample history |
+| `GET /api/history/:id` | One sample history event, or 404 |
 
-### History
+Unsupported mutation methods return 405. These endpoints intentionally expose seed data; they do not reflect a visitor's private browser workspace. UI mutations use the validated workspace reducer in `app/lib/workspace.ts`.
 
-- Displays a list of all target updates from `/public/data/targets-history.json`
-- System track when a target is created or deleted
-- Status changes are show in the history list with previous and update values
-- Action type be used to sort and filter history list items
+## Styling
 
-## 1. Database Schema
+Tailwind is compiled through PostCSS, scanning `app/**/*.{js,ts,jsx,tsx,mdx}`. Responsive grid, spacing, typography, colours, focus states, cards, forms, dialogs, and chart containers use utility classes directly in TSX. `app/globals.css` only includes Tailwind directives and common base rules. There is no Tailwind CDN and no runtime-generated utility class names. Chart drawing colours remain in Chart.js configuration.
 
-### Targets Table
+## Main files
 
-- id: Primary key, unique identifier for each target.
-- name: String, name of the target.
-- description: String, description of the target.
-- pipelineStatus: String or nullable, current status of the target (e.g., "In Progress", "Completed", "Not Set").
-- markets: Array of strings, relevant markets for the target.
+- `app/dashboard/page.tsx`: dashboard, filtering, pagination, summaries, and export.
+- `app/hooks/useTargets.ts`: hydration, browser persistence, and storage errors.
+- `app/lib/workspace.ts`: schema validation and atomic target/history snapshot updates.
+- `app/components/charts/PipelineCharts.tsx`: lazy-loaded chart views.
+- `app/components/charts/TargetTable.tsx`: responsive target cards and status editing.
+- `app/components/modals/`: add, history, delete confirmation, and shared native dialog.
+- `public/data/`: deterministic sample data.
 
-### History Table
-
-- id: Primary key, unique identifier for each history entry.
-- targetId: Foreign key, references the id of the target.
-- oldStatus?: String or nullable, the status before the change.
-- newStatus?: String or nullable, the status after the change.
-- changedAt: Timestamp, date and time of the change.
-- action: String, type of action ("added", "deleted", "status").
-
-### Status Table
-
-- id: Primary key, unique identifier for each target.
-- name: String, name of the status (e.g., "In Progress", "Completed", "Not Set").
-
-## 2. Data Update Strategy
-
-### Change Tracking Mechanism
-
-- Actions: Define clear actions for each operation on targets:
-  - Create: Adds a new target.
-  - Update: Changes the pipeline status or other fields.
-  - Delete: Removes a target and all associated history.
-
-### Logging Changes: Each time a target's status changes:
-
-- Capture the target action type `'added'` `'deleted'` `'status'`
-- Capture the old status and new status.
-- Insert a new entry in the history table.
-
-### Update Flow
-
-- Creating a Target: When a new target is added, it is saved in the Targets table.
-- Adding a Target:
-  - Add the target from the Targets table.
-  - log a creation entry if desired in the History table `'action': 'added'`
-- Updating a Status:
-  - Retrieve the current status.
-  - Update the status in the Targets table.
-  - Log the change in the History table with the appropriate old and new status.
-  - Log the status change in the History table `'action': 'status'`
-- Deleting a Target:
-  - Retrieve the target to be deleted.
-  - Remove the target from the Targets table.
-  - Remove all entries related to this target from the History table or log a deletion entry if desired in the History table `'action': 'deleted'`
-
-## 3. Edge Case Handling
-
-### Edge Case 1: Invalid Status Updates
-
-- Description: An attempt to set a target’s status to an invalid or undefined value.
-- Handling: Implement validation on the status before updating. If the status is invalid, return a default as `'Not Set'` for display purposes in UI.
-
-- ### Edge Case 2: Concurrent Updates
-
-- Description: Multiple users attempt to update the same target's status simultaneously.
-- Handling: Use optimistic concurrency control. Each target can have a version number or timestamp. When updating, check if the version matches the last known version. If it doesn’t, inform the user of a conflict.
-
-### Edge Case 3: Deleting Non-existent Targets
-
-- Description: An attempt to delete a target that doesn’t exist.
-- Handling: Check for the target’s existence before deletion. Return `"error": "Target not found"` via api.
-
-### Edge Case 4: Handling Bulk Updates
-
-- Description: Multiple targets need status updates in a single operation.
-- Handling: Validate each target's status in the batch. If any updates fail, roll back the successful updates to maintain data integrity, or implement partial success handling where applicable.
-
-### Edge Case 5: Data Integrity Issues
-
-- Description: Corrupted data in the history table (e.g., orphaned entries).
-- Handling: Implement periodic checks to ensure referential integrity. Use cascading deletes or other constraints to maintain relationships.
-
-## 4. Monitoring and Maintenance
-
-- Audit Logs: Maintain logs of all changes to targets and their statuses for security and compliance.
-- Data Backups: Regularly back up the database to prevent data loss.
-- Performance Monitoring: Monitor the performance of queries, especially when dealing with large datasets, to ensure efficient access and updates.
-
-## 6. API creation and usage
-
-- Targets: (GET, PUT, POST, PATCH, DELETE) are setup for usage at `<url>/api/targets` and changing items `<url>/api/targets/[id]`
-- History: (GET, POST, DELETE) are setup for usage at `<url>/api/history` and changing items `<url>/api/history/[id]`
-
-## 7. Conclusion
-
-This strategy provides a robust framework for managing and tracking changes to pipeline statuses of targets. By implementing thorough validation, logging, and edge case handling, we can ensure a reliable and user-friendly experience while maintaining data integrity. Regular monitoring and maintenance will further enhance the system's resilience and performance.
+See `submission-notes.md` for validation and deployment limitations.

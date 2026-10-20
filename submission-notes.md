@@ -1,134 +1,41 @@
-# Project Notes & Future Considerations
+# Target Management — implementation notes
 
-## Overview & Features
+## Changes
 
-### General
+- Expanded the dataset from 29 to 89 targets, adding 60 sample companies and related history (124 total events).
+- Rebuilt the dashboard with Tailwind utilities directly in React markup: mobile-first cards, responsive grid, usable touch targets, wrapping filters, constrained charts, and scrolling native dialogs.
+- Added company/description/market search, market selection, sorting, pagination, summary cards, and filtered JSON export.
+- Preserved all four chart types with explicit selection; charts and targets can be hidden independently. The line chart represents status counts, not historical trends.
+- Corrected the all-status toggle and removed chart code that mutated React state with in-place sorting.
+- Replaced bundled-file mutations with an explicitly labelled localStorage demo workspace. Targets and audit history save together, with validation and visible failure states. API routes now serve read-only seed data and return 405 for unsupported writes.
+- Added focus-managed native dialogs, proper button types, confirmation on deletion, history search/action filtering, and stable record IDs.
+- Upgraded Next.js 14.2.15 to 15.5.28, updated its ESLint package and lockfile, set Node 22, and added explicit Vercel build configuration.
 
-- Overall responsive UI layout throughout.
-- Tailwind used for centralized styling.
+## Architecture and trade-offs
 
-### Filters
+The dashboard loads bundled seeds, restores a versioned browser workspace after hydration, validates mutations through `app/lib/workspace.ts`, writes a complete snapshot, and only then updates the visible state. This removes the original Vercel read-only filesystem failure without claiming a shared backend exists.
 
-- User can choose what Pipeline Statuses to display.
-- Both Chart and Target List are automatically updated.
-- User can enable all statuses by clicking `"all"` option.
+The current deployment needs no secrets or database. Browser data remains origin-specific and can be lost if site data is cleared. Cross-tab storage events refresh the UI, but simultaneous writes in separate tabs are not database transactions. A shared multi-user product would need authentication, durable database storage, and transactional audit history.
 
-### Chart
+The existing API URLs remain available for read-only seed consumers. They do not expose browser edits. Export contains matching target records only; it is not a complete workspace backup.
 
-- Bars are hidden when filters are toggled.
-- Hover displays the count of targets.
+## Validation
 
-### Target List
+Production build, lint, and TypeScript checks pass locally. A Playwright/Chromium check against the production server confirmed:
 
-- Displays a list of all targets from `/public/data/targets.json`
-- User has ability to delete a target with a confirmation modal
-- User can edit the pipeline status by clicking edit and saving for each target
+- 89 seed targets and rejection of unsupported API writes (405).
+- No horizontal overflow at widths 320, 375, 768, 1024, and 1440 pixels.
+- Search, market filters, select/deselect all statuses, pagination, and all four chart views.
+- Target creation, status change, and deletion surviving page reloads.
+- Creation/update/deletion events retained in searchable history.
+- Delete cancellation, Escape dismissal, and JSON download.
+- Simulated localStorage quota failure keeps the form open and does not add an unsaved target.
+- Zero browser runtime errors during the tested flows.
 
-### Add New Target
+Desktop and mobile screenshots were inspected. Live Vercel verification is separate from these local checks.
 
-- New target modal allows user to create a new target
-- User can add multiple markets by click the [+] button
+## Deployment
 
-### History
+Existing Vercel project: `management-dashboard-nextjs` in `jp0624s-projects`.
 
-- Displays a list of all target updates from `/public/data/targets-history.json`
-- System track when a target is created or deleted
-- Status changes are show in the history list with previous and update values
-- Action type be used to sort and filter history list items
-
-## 1. Database Schema
-
-### Targets Table
-
-- id: Primary key, unique identifier for each target.
-- name: String, name of the target.
-- description: String, description of the target.
-- pipelineStatus: String or nullable, current status of the target (e.g., "In Progress", "Completed", "Not Set").
-- markets: Array of strings, relevant markets for the target.
-
-### History Table
-
-- id: Primary key, unique identifier for each history entry.
-- targetId: Foreign key, references the id of the target.
-- oldStatus?: String or nullable, the status before the change.
-- newStatus?: String or nullable, the status after the change.
-- changedAt: Timestamp, date and time of the change.
-- action: String, type of action ("added", "deleted", "status").
-
-### Status Table
-
-- id: Primary key, unique identifier for each target.
-- name: String, name of the status (e.g., "In Progress", "Completed", "Not Set").
-
-## 2. Data Update Strategy
-
-### Change Tracking Mechanism
-
-- Actions: Define clear actions for each operation on targets:
-  - Create: Adds a new target.
-  - Update: Changes the pipeline status or other fields.
-  - Delete: Removes a target and all associated history.
-
-### Logging Changes: Each time a target's status changes:
-
-- Capture the target action type `'added'` `'deleted'` `'status'`
-- Capture the old status and new status.
-- Insert a new entry in the history table.
-
-### Update Flow
-
-- Creating a Target: When a new target is added, it is saved in the Targets table.
-- Adding a Target:
-  - Add the target from the Targets table.
-  - log a creation entry if desired in the History table `'action': 'added'`
-- Updating a Status:
-  - Retrieve the current status.
-  - Update the status in the Targets table.
-  - Log the change in the History table with the appropriate old and new status.
-  - Log the status change in the History table `'action': 'status'`
-- Deleting a Target:
-  - Retrieve the target to be deleted.
-  - Remove the target from the Targets table.
-  - Remove all entries related to this target from the History table or log a deletion entry if desired in the History table `'action': 'deleted'`
-
-## 3. Edge Case Handling
-
-### Edge Case 1: Invalid Status Updates
-
-- Description: An attempt to set a target’s status to an invalid or undefined value.
-- Handling: Implement validation on the status before updating. If the status is invalid, return a default as `'Not Set'` for display purposes in UI.
-
-- ### Edge Case 2: Concurrent Updates
-
-- Description: Multiple users attempt to update the same target's status simultaneously.
-- Handling: Use optimistic concurrency control. Each target can have a version number or timestamp. When updating, check if the version matches the last known version. If it doesn’t, inform the user of a conflict.
-
-### Edge Case 3: Deleting Non-existent Targets
-
-- Description: An attempt to delete a target that doesn’t exist.
-- Handling: Check for the target’s existence before deletion. Return `"error": "Target not found"` via api.
-
-### Edge Case 4: Handling Bulk Updates
-
-- Description: Multiple targets need status updates in a single operation.
-- Handling: Validate each target's status in the batch. If any updates fail, roll back the successful updates to maintain data integrity, or implement partial success handling where applicable.
-
-### Edge Case 5: Data Integrity Issues
-
-- Description: Corrupted data in the history table (e.g., orphaned entries).
-- Handling: Implement periodic checks to ensure referential integrity. Use cascading deletes or other constraints to maintain relationships.
-
-## 4. Monitoring and Maintenance
-
-- Audit Logs: Maintain logs of all changes to targets and their statuses for security and compliance.
-- Data Backups: Regularly back up the database to prevent data loss.
-- Performance Monitoring: Monitor the performance of queries, especially when dealing with large datasets, to ensure efficient access and updates.
-
-## 6. API creation and usage
-
-- Targets: (GET, PUT, POST, PATCH, DELETE) are setup for usage at `<url>/api/targets` and dynamic items `<url>/api/targets/[id]`
-- History: (GET, POST, DELETE) are setup for usage at `<url>/api/history` and dynamic items `<url>/api/history/[id]`
-
-## 7. Conclusion
-
-This strategy provides a robust framework for managing and tracking changes to pipeline statuses of targets. By implementing thorough validation, logging, and edge case handling, we can ensure a reliable and user-friendly experience while maintaining data integrity. Regular monitoring and maintenance will further enhance the system's resilience and performance.
+The connected Vercel account can list the project but returns HTTP 403 when reading its team-scoped configuration. Local CLI credentials are not available. GitHub changes can be pushed; live deployment status must be checked through GitHub deployment checks or after reconnecting Vercel with access to that team. Do not treat a successful local build as confirmation of a live deployment.

@@ -8,7 +8,7 @@ Chart.register(...registerables)
 const BarChart = ({ targets, activeFilters }: any) => {
 	// Prepare data for the chart
 	const data = {
-		labels: activeFilters.sort(), // Use active filters as labels
+		labels: [...activeFilters].sort(), // Use active filters as labels
 		datasets: [
 			{
 				label: 'Count', // Single dataset for counts
@@ -89,3 +89,4 @@ const BarChart = ({ targets, activeFilters }: any) => {
 }
 
 export default BarChart
+
