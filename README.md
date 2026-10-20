@@ -1,4 +1,4 @@
-# Target Management Dashboard
+# Management Dashboard Nextjs
 
 ## Docker + Next.js + Tailwind + chart.js
 
@@ -17,7 +17,7 @@ git clone https://github.com/jp0624/management-dashboard-nextjs.git
 docker-compose up --build
 ```
 
-- the app will takes a few minutes the first time to download and install necessary files and packages
+- The first build downloads dependencies.
 - You will then be able to access the app at: http://localhost:3000
 
 #### Note:
@@ -49,7 +49,7 @@ git clone https://github.com/jp0624/management-dashboard-nextjs.git
 npm install
 ```
 
-- the app will takes a minute to download and install necessary files and packages
+- Installation downloads dependencies.
 - then launch the app:
 
 ```
@@ -188,8 +188,8 @@ npm run dev
 
 ## 6. API creation and usage
 
-- Targets: (GET, PUT, POST, PATCH, DELETE) are setup for usage at `<url>/api/targets` and dynamic items `<url>/api/targets/[id]`
-- History: (GET, POST, DELETE) are setup for usage at `<url>/api/history` and dynamic items `<url>/api/history/[id]`
+- Targets: (GET, PUT, POST, PATCH, DELETE) are setup for usage at `<url>/api/targets` and changing items `<url>/api/targets/[id]`
+- History: (GET, POST, DELETE) are setup for usage at `<url>/api/history` and changing items `<url>/api/history/[id]`
 
 ## 7. Conclusion
 
